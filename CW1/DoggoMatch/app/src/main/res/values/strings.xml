@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Doggo Match</string>
+    <string name="identify_the_breed">Identify the Breed</string>
+    <string name="identify_the_dog">Identify the Dog</string>
+    <string name="search_dog_breeds">Search Dog Breeds</string>
+    <string name="switch_toggle">Switch</string>
+</resources>
