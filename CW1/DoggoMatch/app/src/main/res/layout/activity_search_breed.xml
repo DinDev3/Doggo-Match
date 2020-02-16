@@ -22,7 +22,7 @@
         android:id="@+id/submit_button_search"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="70dp"
+        android:layout_marginTop="50dp"
         android:text="@string/button_label_submit"
         android:textAllCaps="false"
         app:layout_constraintEnd_toEndOf="parent"
