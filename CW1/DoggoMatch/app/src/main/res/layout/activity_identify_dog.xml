@@ -42,26 +42,26 @@
         app:layout_constraintTop_toBottomOf="@+id/result_text">
 
         <ImageView
-            android:id="@+id/imageView"
+            android:id="@+id/first_dog_image"
             android:layout_width="170dp"
             android:layout_height="170dp"
-            android:contentDescription="Image of first dog"
+            android:contentDescription="@string/image_of_first_dog_description"
             android:paddingBottom="8dp"
             app:srcCompat="@android:color/holo_green_light" />
 
         <ImageView
-            android:id="@+id/imageView2"
+            android:id="@+id/second_dog_image"
             android:layout_width="170dp"
             android:layout_height="170dp"
-            android:contentDescription="Image of second dog"
+            android:contentDescription="@string/image_of_second_dog_description"
             android:paddingBottom="8dp"
             app:srcCompat="@android:color/holo_orange_dark" />
 
         <ImageView
-            android:id="@+id/imageView3"
+            android:id="@+id/third_dog_image"
             android:layout_width="170dp"
             android:layout_height="170dp"
-            android:contentDescription="Image of third dog"
+            android:contentDescription="@string/image_of_third_dog_description"
             app:srcCompat="@android:color/holo_blue_dark" />
     </LinearLayout>
 
@@ -71,6 +71,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="@string/next_button_label"
+        android:textAllCaps="false"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"

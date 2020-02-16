@@ -6,4 +6,52 @@
     android:layout_height="match_parent"
     tools:context=".SearchBreedActivity">
 
+    <Button
+        android:id="@+id/stop_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="150dp"
+        android:text="@string/stop_label"
+        android:textAllCaps="false"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/search_random_image" />
+
+    <Button
+        android:id="@+id/submit_button_search"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="70dp"
+        android:text="@string/button_label_submit"
+        android:textAllCaps="false"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/enter_breed_text"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/enter_breed_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:autofillHints=""
+        android:ems="10"
+        android:hint="@string/enter_a_breed_hint"
+        android:inputType="textPersonName"
+        app:layout_constraintBaseline_toBaselineOf="@+id/submit_button_search"
+        app:layout_constraintEnd_toStartOf="@+id/submit_button_search"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageView
+        android:id="@+id/search_random_image"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:layout_marginTop="60dp"
+        android:contentDescription="@string/random_image_of_breed_description"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/submit_button_search"
+        app:srcCompat="@android:color/holo_purple" />
 </androidx.constraintlayout.widget.ConstraintLayout>

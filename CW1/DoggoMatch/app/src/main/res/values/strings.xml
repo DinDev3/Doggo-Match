@@ -9,4 +9,10 @@
     <string name="random_dog_image_description">Displays an image of a random dog</string>
     <string name="breed_text">Breed:</string>
     <string name="next_button_label">Next</string>
+    <string name="image_of_first_dog_description">Image of first dog</string>
+    <string name="image_of_second_dog_description">Image of second dog</string>
+    <string name="image_of_third_dog_description">Image of third dog</string>
+    <string name="stop_label">Stop</string>
+    <string name="enter_a_breed_hint">Enter a Breed</string>
+    <string name="random_image_of_breed_description">Random image of dog breed</string>
 </resources>
