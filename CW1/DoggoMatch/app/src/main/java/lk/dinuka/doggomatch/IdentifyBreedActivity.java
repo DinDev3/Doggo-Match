@@ -9,23 +9,29 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import java.util.Random;
+
 public class IdentifyBreedActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
-    int imagesOldEnglishSheep[] = {R.drawable.n02105641_764};
+    public String allDogBreeds[] = {"Chihuahua", "Afghan Hound", "Basset", "Blood Hound", "Australian Terrier",
+            "Golden Retriever", "Labrador Retriever", "Old English Sheepdog", "Rottweiler", "Greater Swiss Mountain Dog", "Dingo"};
+
+
+    // Arrays that reference to the dog images categorized as breed.
+    int imagesOldEnglishSheep[] = {R.drawable.n02105641_764, R.drawable.n02105641_6270};
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_identify_breed);
 
-        try
-        {
+        try {
             this.getSupportActionBar().hide();              // remove title bar of app
+        } catch (NullPointerException e) {
         }
-        catch (NullPointerException e){}
 
         setContentView(R.layout.activity_identify_breed);
-
 
 
         // create the spinner
@@ -52,11 +58,10 @@ public class IdentifyBreedActivity extends AppCompatActivity implements AdapterV
     }
 
 
-
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
         String spinnerLabel = adapterView.getItemAtPosition(i).toString();
-        displayToast(spinnerLabel);             // used to check whether the correct spinner item was identified. <Can remove later>
+//        displayToast(spinnerLabel);             // used to check whether the correct spinner item was identified. <Can remove later>
     }
 
     @Override
@@ -68,4 +73,13 @@ public class IdentifyBreedActivity extends AppCompatActivity implements AdapterV
         Toast.makeText(getApplicationContext(), message,
                 Toast.LENGTH_SHORT).show();
     }
+
+
+    public int getRandomBreed() {
+        //get random number between 0-10 (index range for 11 breeds in the array)
+        Random r = new Random();
+        displayToast(Integer.toString(getRandomBreed()));
+        return r.nextInt(11);
+    }
+
 }
