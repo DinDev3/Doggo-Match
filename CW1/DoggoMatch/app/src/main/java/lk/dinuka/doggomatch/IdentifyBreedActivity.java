@@ -38,7 +38,7 @@ public class IdentifyBreedActivity extends AppCompatActivity implements AdapterV
     String[] imagesDingo = {"n02115641_670", "n02115641_726", "n02115641_1228", "n02115641_1380", "n02115641_4563", "n02115641_4601", "n02115641_1154", "n02115641_3214", "n02115641_3862", "n02115641_7109"};
 
 
-//    List<String> allDisplayedImages = new ArrayList<>();        // all the displayed images are added here. To make sure that images aren't repeated
+    List<String> allDisplayedImages = new ArrayList<>();        // all the displayed images are added here. To make sure that images aren't repeated
 
 
     public String randomBreed;
@@ -112,44 +112,54 @@ public class IdentifyBreedActivity extends AppCompatActivity implements AdapterV
 
 
     public void displayRandomImage() {           // method used to display a random image of a random breed
-        randomBreed = allDogBreeds[getRandomBreed()];           // get a random breed
 
         ImageView imageDog = findViewById(R.id.random_dog_image);
 
-        switch (randomBreed) {
-            case "Chihuahua":
-                randomImageOfChosenBreed = imagesChihuahua[getRandomImage()];     // get a random image reference
-                break;
-            case "Afghan Hound":
-                randomImageOfChosenBreed = imagesAfghanHound[getRandomImage()];     // get a random image reference
-                break;
-            case "Basset":
-                randomImageOfChosenBreed = imagesBasset[getRandomImage()];     // get a random image reference
-                break;
-            case "Blood Hound":
-                randomImageOfChosenBreed = imagesBloodHound[getRandomImage()];     // get a random image reference
-                break;
-            case "Australian Terrier":
-                randomImageOfChosenBreed = imagesAustralianTerrier[getRandomImage()];     // get a random image reference
-                break;
-            case "Golden Retriever":
-                randomImageOfChosenBreed = imagesGoldenRetriever[getRandomImage()];     // get a random image reference
-                break;
-            case "Labrador Retriever":
-                randomImageOfChosenBreed = imagesLabradorRetriever[getRandomImage()];     // get a random image reference
-                break;
-            case "Old English Sheepdog":
-                randomImageOfChosenBreed = imagesOldEnglishSheep[getRandomImage()];     // get a random image reference
-                break;
-            case "Rottweiler":
-                randomImageOfChosenBreed = imagesRottweiler[getRandomImage()];     // get a random image reference
-                break;
-            case "Greater Swiss Mountain Dog":
-                randomImageOfChosenBreed = imagesGreaterSwissMountainDog[getRandomImage()];     // get a random image reference
-                break;
-            case "Dingo":
-                randomImageOfChosenBreed = imagesDingo[getRandomImage()];     // get a random image reference
-        }
+        do {            // making sure that the same images aren't repeated
+            // this will run in an infinite loop once all the images are displayed.
+
+            randomBreed = allDogBreeds[getRandomBreed()];           // get a random breed
+            int randomImageIndex = getRandomImage();                // get a random image of a particular breed
+
+            switch (randomBreed) {
+                case "Chihuahua":
+                    randomImageOfChosenBreed = imagesChihuahua[randomImageIndex];     // get a random image reference
+                    break;
+                case "Afghan Hound":
+                    randomImageOfChosenBreed = imagesAfghanHound[randomImageIndex];     // get a random image reference
+                    break;
+                case "Basset":
+                    randomImageOfChosenBreed = imagesBasset[randomImageIndex];     // get a random image reference
+                    break;
+                case "Blood Hound":
+                    randomImageOfChosenBreed = imagesBloodHound[randomImageIndex];     // get a random image reference
+                    break;
+                case "Australian Terrier":
+                    randomImageOfChosenBreed = imagesAustralianTerrier[randomImageIndex];     // get a random image reference
+                    break;
+                case "Golden Retriever":
+                    randomImageOfChosenBreed = imagesGoldenRetriever[randomImageIndex];     // get a random image reference
+                    break;
+                case "Labrador Retriever":
+                    randomImageOfChosenBreed = imagesLabradorRetriever[randomImageIndex];     // get a random image reference
+                    break;
+                case "Old English Sheepdog":
+                    randomImageOfChosenBreed = imagesOldEnglishSheep[randomImageIndex];     // get a random image reference
+                    break;
+                case "Rottweiler":
+                    randomImageOfChosenBreed = imagesRottweiler[randomImageIndex];     // get a random image reference
+                    break;
+                case "Greater Swiss Mountain Dog":
+                    randomImageOfChosenBreed = imagesGreaterSwissMountainDog[randomImageIndex];     // get a random image reference
+                    break;
+                case "Dingo":
+                    randomImageOfChosenBreed = imagesDingo[randomImageIndex];     // get a random image reference
+            }
+//            System.out.println(allDisplayedImages);         // to check whether the arrayList is getting updated
+
+        } while (allDisplayedImages.contains(randomImageOfChosenBreed));
+
+        allDisplayedImages.add(randomImageOfChosenBreed);
 
         // display chosen random image
         int resource_id = getResources().getIdentifier(randomImageOfChosenBreed, "drawable", "lk.dinuka.doggomatch");
