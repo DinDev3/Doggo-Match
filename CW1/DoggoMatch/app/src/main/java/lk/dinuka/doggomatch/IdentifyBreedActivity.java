@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -46,6 +47,7 @@ public class IdentifyBreedActivity extends AppCompatActivity implements AdapterV
     public String selectedSpinnerLabel;
     private TextView mShowResultMessage;
     private TextView mShowCorrectAns;
+    private Button mButtonSubNext;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +62,7 @@ public class IdentifyBreedActivity extends AppCompatActivity implements AdapterV
         setContentView(R.layout.activity_identify_breed);
         mShowResultMessage = /*(TextView)*/ findViewById(R.id.result_text);         // Connecting TextView to variable
         mShowCorrectAns = /*(TextView)*/ findViewById(R.id.correct_breed_answer);         // Connecting TextView to variable
+        mButtonSubNext = /*(Button)*/ findViewById(R.id.submit_button_search);         // Connecting TextView to variable
 
         //----------Display random image
         displayRandomImage();
@@ -94,7 +97,7 @@ public class IdentifyBreedActivity extends AppCompatActivity implements AdapterV
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
         selectedSpinnerLabel = adapterView.getItemAtPosition(i).toString();
-        displayToast(selectedSpinnerLabel);             // used to check whether the correct spinner item was identified. <Can remove later>
+//        displayToast(selectedSpinnerLabel);             // used to check whether the correct spinner item was identified. <Can remove later>
     }
 
     @Override
@@ -170,15 +173,25 @@ public class IdentifyBreedActivity extends AppCompatActivity implements AdapterV
 
 
     public void submitCheck(View view) {
-        if (selectedSpinnerLabel.equals(randomBreed)){
-            mShowResultMessage.setText("CORRECT!");
-            mShowResultMessage.setTextColor(Color.parseColor("#00E676"));
-        } else {
-            mShowResultMessage.setText("WRONG!");
-            mShowResultMessage.setTextColor(Color.RED);
+        if (mButtonSubNext.getText().equals("Submit")) {        // Submit has been clicked
+            if (selectedSpinnerLabel.equals(randomBreed)) {
+                mShowResultMessage.setText("CORRECT!");
+                mShowResultMessage.setTextColor(Color.parseColor("#00E676"));
+            } else {
+                mShowResultMessage.setText("WRONG!");
+                mShowResultMessage.setTextColor(Color.RED);
 
-            mShowCorrectAns.setText(randomBreed);
-            mShowCorrectAns.setTextColor(Color.BLUE);
+                mShowCorrectAns.setText(randomBreed);
+                mShowCorrectAns.setTextColor(Color.BLUE);
+            }
+            mButtonSubNext.setText("Next");
+        } else {            // Next has been clicked
+            mButtonSubNext.setText("Submit");
+            mShowResultMessage.setText("");
+            mShowCorrectAns.setText("");
+
+            displayRandomImage();       // display new random image
+
         }
     }
 }
