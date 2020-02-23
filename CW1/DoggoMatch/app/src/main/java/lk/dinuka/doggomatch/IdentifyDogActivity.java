@@ -39,7 +39,7 @@ public class IdentifyDogActivity extends AppCompatActivity {
     private boolean flagPicked;         // used to check if an image was selected
 
     private TextView mBreedNameLabel;
-    private ImageView mpickedImage;
+    private ImageView mPickedImage;
     private TextView mShowResultMessage;
 
 
@@ -163,27 +163,27 @@ public class IdentifyDogActivity extends AppCompatActivity {
 
 
     public void checkAnswerFirst(View view) {            // when the first image is clicked, checks if the answer is correct
-        mpickedImage = findViewById(R.id.first_dog_image);
+        mPickedImage = findViewById(R.id.first_dog_image);
         displayResult();
     }
 
     public void checkAnswerSecond(View view) {            // when the second image is clicked, checks if the answer is correct
-        mpickedImage = findViewById(R.id.second_dog_image);
+        mPickedImage = findViewById(R.id.second_dog_image);
         displayResult();
     }
 
     public void checkAnswerThird(View view) {            // when the third image is clicked, checks if the answer is correct
-        mpickedImage = findViewById(R.id.third_dog_image);
+        mPickedImage = findViewById(R.id.third_dog_image);
         displayResult();
     }
 
 
     public void displayResult() {
-        System.out.println(mpickedImage.getTag());          // To check whether the chosen image gave the correct tag
+        System.out.println(mPickedImage.getTag());          // To check whether the chosen image gave the correct tag
 
         if (!flagPicked) {
             flagPicked = true;
-            if (mpickedImage.getTag().equals(questionBreed)) {        // If the displayed breed was picked properly
+            if (mPickedImage.getTag().equals(questionBreed)) {        // If the displayed breed was picked properly
                 mShowResultMessage.setText("CORRECT!");
                 mShowResultMessage.setTextColor(Color.parseColor("#00E676"));
 
