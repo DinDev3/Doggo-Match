@@ -2,6 +2,7 @@ package lk.dinuka.doggomatch;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -35,8 +36,12 @@ public class IdentifyDogActivity extends AppCompatActivity {
     public String randomBreed;
     public String randomImageOfChosenBreed;
     private String questionBreed;
+    private boolean flagPicked;         // used to check if an image was selected
 
     private TextView mBreedNameLabel;
+    private ImageView mpickedImage;
+    private TextView mShowResultMessage;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,31 +55,33 @@ public class IdentifyDogActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_identify_dog);
         mBreedNameLabel = /*(TextView)*/ findViewById(R.id.breed_name_label);         // Connecting TextView to variable
+        mShowResultMessage = /*(TextView)*/ findViewById(R.id.result_text);         // Connecting TextView to variable
 
         showImageSet();
-
-
     }
 
 
-
-    public void showImageSet(){
+    public void showImageSet() {
         ImageView imageDogFirst = findViewById(R.id.first_dog_image);
         ImageView imageDogSecond = findViewById(R.id.second_dog_image);
         ImageView imageDogThird = findViewById(R.id.third_dog_image);
 
-
         imageDogFirst.setImageResource(displayRandomImage());
+        imageDogFirst.setTag(displayingBreeds.get(0));          // displayingBreeds ArrayList will have the Breed names in order of adding
         imageDogSecond.setImageResource(displayRandomImage());
+        imageDogSecond.setTag(displayingBreeds.get(1));
         imageDogThird.setImageResource(displayRandomImage());
+        imageDogThird.setTag(displayingBreeds.get(2));
 
+        mShowResultMessage.setText("");
         chooseBreedToBeIdentified();            // display breed to be identified
     }
 
 
     public int displayRandomImage() {           // method used to display a random image of a random breed
 
-        do {            // making sure that the same images aren't repeated & images of the same breed aren't shown together
+        do
+        {            // making sure that the same images aren't repeated & images of the same breed aren't shown together
             // this will run in an infinite loop once all the images are displayed.
 
             randomBreed = allDogBreeds[getRandomBreed()];           // get a random breed
@@ -121,7 +128,7 @@ public class IdentifyDogActivity extends AppCompatActivity {
         allDisplayedImages.add(randomImageOfChosenBreed);           // to make sure that the image isn't repeated
         displayingBreeds.add(randomBreed);                          // to make sure that images of the same breed aren't shown at once
 
-        // display chosen random image
+        // return chosen random image
         return getResources().getIdentifier(randomImageOfChosenBreed, "drawable", "lk.dinuka.doggomatch");
     }
 
@@ -139,9 +146,9 @@ public class IdentifyDogActivity extends AppCompatActivity {
         return r.nextInt(10);
     }
 
-    private void chooseBreedToBeIdentified(){           // used to pick the breed to be identified
+    private void chooseBreedToBeIdentified() {           // used to pick the breed to be identified
         Random r = new Random();
-        int questionBreedIndex=r.nextInt(3);
+        int questionBreedIndex = r.nextInt(3);
 
         questionBreed = displayingBreeds.get(questionBreedIndex);
         mBreedNameLabel.setText(questionBreed);
@@ -150,32 +157,40 @@ public class IdentifyDogActivity extends AppCompatActivity {
 
     public void showNextImageSet(View view) {       // when "Next" button is clicked, shows new set of images
         displayingBreeds.clear();           // for a new set of image breeds
+        flagPicked = false;             // resetting the flag for picking an image
         showImageSet();
     }
 
 
-//    public void checkAnswerFirst(View view) {            // when the first image is clicked, checks if the answer is correct
-//        ImageView imageDogFirst = findViewById(R.id.first_dog_image);
-////        String resourceName = imageDogFirst.getDrawable();
-//
-//        displayResult();
-//    }
-//
-//    public void checkAnswerSecond(View view) {            // when the second image is clicked, checks if the answer is correct
-//
-//        displayResult();
-//    }
-//
-//    public void checkAnswerThird(View view) {            // when the third image is clicked, checks if the answer is correct
-//
-//        displayResult();
-//    }
-//
-//    public void displayResult(){
-//        if (){
-//
-//        } else {
-//
-//        }
-//    }
+    public void checkAnswerFirst(View view) {            // when the first image is clicked, checks if the answer is correct
+        mpickedImage = findViewById(R.id.first_dog_image);
+        displayResult();
+    }
+
+    public void checkAnswerSecond(View view) {            // when the second image is clicked, checks if the answer is correct
+        mpickedImage = findViewById(R.id.second_dog_image);
+        displayResult();
+    }
+
+    public void checkAnswerThird(View view) {            // when the third image is clicked, checks if the answer is correct
+        mpickedImage = findViewById(R.id.third_dog_image);
+        displayResult();
+    }
+
+
+    public void displayResult() {
+        System.out.println(mpickedImage.getTag());          // To check whether the chosen image gave the correct tag
+
+        if (!flagPicked) {
+            flagPicked = true;
+            if (mpickedImage.getTag().equals(questionBreed)) {        // If the displayed breed was picked properly
+                mShowResultMessage.setText("CORRECT!");
+                mShowResultMessage.setTextColor(Color.parseColor("#00E676"));
+
+            } else {
+                mShowResultMessage.setText("WRONG!");
+                mShowResultMessage.setTextColor(Color.RED);
+            }
+        }
+    }
 }
