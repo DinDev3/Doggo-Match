@@ -62,7 +62,7 @@ public class IdentifyBreedActivity extends AppCompatActivity implements AdapterV
         setContentView(R.layout.activity_identify_breed);
         mShowResultMessage = /*(TextView)*/ findViewById(R.id.result_text);         // Connecting TextView to variable
         mShowCorrectAns = /*(TextView)*/ findViewById(R.id.correct_breed_answer);         // Connecting TextView to variable
-        mButtonSubNext = /*(Button)*/ findViewById(R.id.submit_button_search);         // Connecting TextView to variable
+        mButtonSubNext = /*(Button)*/ findViewById(R.id.submit_button_search);         // Connecting Button to variable
 
         //----------Display random image
         displayRandomImage();
