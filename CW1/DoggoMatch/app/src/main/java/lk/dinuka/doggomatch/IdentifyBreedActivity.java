@@ -2,12 +2,14 @@ package lk.dinuka.doggomatch;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -41,6 +43,10 @@ public class IdentifyBreedActivity extends AppCompatActivity implements AdapterV
     public String randomBreed;
     public String randomImageOfChosenBreed;
 
+    public String selectedSpinnerLabel;
+    private TextView mShowResultMessage;
+    private TextView mShowCorrectAns;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,10 +58,10 @@ public class IdentifyBreedActivity extends AppCompatActivity implements AdapterV
         }
 
         setContentView(R.layout.activity_identify_breed);
-
+        mShowResultMessage = /*(TextView)*/ findViewById(R.id.result_text);         // Connecting TextView to variable
+        mShowCorrectAns = /*(TextView)*/ findViewById(R.id.correct_breed_answer);         // Connecting TextView to variable
 
         //----------Display random image
-//        System.out.println(Arrays.toString(imagesOldEnglishSheep));          //--------------check what the array contains
         displayRandomImage();
 
 
@@ -87,8 +93,8 @@ public class IdentifyBreedActivity extends AppCompatActivity implements AdapterV
 
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-        String spinnerLabel = adapterView.getItemAtPosition(i).toString();
-//        displayToast(spinnerLabel);             // used to check whether the correct spinner item was identified. <Can remove later>
+        selectedSpinnerLabel = adapterView.getItemAtPosition(i).toString();
+        displayToast(selectedSpinnerLabel);             // used to check whether the correct spinner item was identified. <Can remove later>
     }
 
     @Override
@@ -163,4 +169,16 @@ public class IdentifyBreedActivity extends AppCompatActivity implements AdapterV
     }
 
 
+    public void submitCheck(View view) {
+        if (selectedSpinnerLabel.equals(randomBreed)){
+            mShowResultMessage.setText("CORRECT!");
+            mShowResultMessage.setTextColor(Color.parseColor("#00E676"));
+        } else {
+            mShowResultMessage.setText("WRONG!");
+            mShowResultMessage.setTextColor(Color.RED);
+
+            mShowCorrectAns.setText(randomBreed);
+            mShowCorrectAns.setTextColor(Color.BLUE);
+        }
+    }
 }
