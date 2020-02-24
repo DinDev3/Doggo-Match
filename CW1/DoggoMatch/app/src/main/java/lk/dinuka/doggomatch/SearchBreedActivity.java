@@ -5,9 +5,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class SearchBreedActivity extends AppCompatActivity {
 
@@ -31,13 +33,17 @@ public class SearchBreedActivity extends AppCompatActivity {
 
     List<String> shownImages = new ArrayList<>();           // holds all the images that have been displayed
 
+
+    public String randomImageOfChosenBreed;
+    private boolean stopHandler;                // checks whether the stop button has been pressed
+
     private EditText mBreedText;
+    private ImageView mImgDisplay;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_search_breed);
 
         try {
             this.getSupportActionBar().hide();              // remove title bar of app
@@ -45,6 +51,8 @@ public class SearchBreedActivity extends AppCompatActivity {
         }
 
         setContentView(R.layout.activity_search_breed);
+        mImgDisplay = findViewById(R.id.search_random_image);
+
 
     }
 
@@ -52,46 +60,83 @@ public class SearchBreedActivity extends AppCompatActivity {
     public void submitBreed(View view) {
         mBreedText = findViewById(R.id.enter_breed_text);
 
-        switch (mBreedText.getText().toString()) {
-            case "Chihuahua":
+        // have if else.
+        // if available in the array, pass the string to showSlideShow() function.
+        showSlideShow(mBreedText.getText().toString());
+    }
 
-                break;
-            case "Afghan Hound":
 
-                break;
-            case "Basset":
+    public void showSlideShow(String breedName) {            // display slide show operation
 
-                break;
-            case "Blood Hound":
+        stopHandler = false;            // getting rid of the stop handler, to access the loop
+        shownImages.clear();                // if images can be repeated after restarting, after pressing the Stop button
 
-                break;
-            case "Australian Terrier":
 
-                break;
-            case "Golden Retriever":
+        while (!stopHandler) {          // loop until the stop button is pressed
 
-                break;
-            case "Labrador Retriever":
 
-                break;
-            case "Old English Sheepdog":
+            // Need to give a waiting time (break) before reiterating the loop!!!!!!!!!!!!!!!!
+            // Need to have a countdown timer and keep changing the images------------------------->>>>>>>>>>>>>
 
-                break;
-            case "Rottweiler":
 
-                break;
-            case "Greater Swiss Mountain Dog":
+            // shuffle images related to breed name and pass into resource
+            int randomImageIndex = getRandomImage();                // get a random image of a particular breed
 
-                break;
-            case "Dingo":
 
-                break;
-            default:
+            switch (breedName) {
+                case "Chihuahua":
+                    randomImageOfChosenBreed = imagesChihuahua[randomImageIndex];     // get a random image reference
+                    break;
+                case "Afghan Hound":
+                    randomImageOfChosenBreed = imagesAfghanHound[randomImageIndex];     // get a random image reference
+                    break;
+                case "Basset":
+                    randomImageOfChosenBreed = imagesBasset[randomImageIndex];     // get a random image reference
+                    break;
+                case "Blood Hound":
+                    randomImageOfChosenBreed = imagesBloodHound[randomImageIndex];     // get a random image reference
+                    break;
+                case "Australian Terrier":
+                    randomImageOfChosenBreed = imagesAustralianTerrier[randomImageIndex];     // get a random image reference
+                    break;
+                case "Golden Retriever":
+                    randomImageOfChosenBreed = imagesGoldenRetriever[randomImageIndex];     // get a random image reference
+                    break;
+                case "Labrador Retriever":
+                    randomImageOfChosenBreed = imagesLabradorRetriever[randomImageIndex];     // get a random image reference
+                    break;
+                case "Old English Sheepdog":
+                    randomImageOfChosenBreed = imagesOldEnglishSheep[randomImageIndex];     // get a random image reference
+                    break;
+                case "Rottweiler":
+                    randomImageOfChosenBreed = imagesRottweiler[randomImageIndex];     // get a random image reference
+                    break;
+                case "Greater Swiss Mountain Dog":
+                    randomImageOfChosenBreed = imagesGreaterSwissMountainDog[randomImageIndex];     // get a random image reference
+                    break;
+                case "Dingo":
+                    randomImageOfChosenBreed = imagesDingo[randomImageIndex];     // get a random image reference
+                default:
+
+            }
+
+            shownImages.add(randomImageOfChosenBreed);          // to show unique images of a chosen breed
+
+            int resource_id = getResources().getIdentifier(randomImageOfChosenBreed, "drawable", "lk.dinuka.doggomatch");
+            mImgDisplay.setImageResource(resource_id);
 
         }
     }
 
-    public void showSlideShow(){
 
+    public int getRandomImage() {
+        //get random number between 0-9 (index range for 10 image references in the array)
+        Random r = new Random();
+        return r.nextInt(10);
+    }
+
+
+    public void stopShow(View view) {           // when Stop button is clicked, the slideshow should be stopped
+        stopHandler = true;
     }
 }

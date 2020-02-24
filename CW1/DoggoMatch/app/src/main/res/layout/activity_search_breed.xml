@@ -11,12 +11,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="150dp"
+        android:background="#B40606"
         android:text="@string/stop_label"
         android:textAllCaps="false"
+        android:textColor="#FFFFFF"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/search_random_image" />
+        app:layout_constraintTop_toBottomOf="@+id/search_random_image"
+        android:onClick="stopShow"/>
 
     <Button
         android:id="@+id/submit_button_search"
@@ -38,7 +41,7 @@
         android:autofillHints=""
         android:ems="10"
         android:hint="@string/enter_a_breed_hint"
-        android:inputType="textPersonName"
+        android:inputType="textPersonName|textCapWords"
         app:layout_constraintBaseline_toBaselineOf="@+id/submit_button_search"
         app:layout_constraintEnd_toStartOf="@+id/submit_button_search"
         app:layout_constraintHorizontal_bias="0.5"

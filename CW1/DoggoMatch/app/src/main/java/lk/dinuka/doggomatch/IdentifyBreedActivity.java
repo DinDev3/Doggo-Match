@@ -52,7 +52,6 @@ public class IdentifyBreedActivity extends AppCompatActivity implements AdapterV
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_identify_breed);
 
         try {
             this.getSupportActionBar().hide();              // remove title bar of app
