@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -14,7 +15,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
@@ -48,6 +48,8 @@ public class IdentifyBreedActivity extends AppCompatActivity implements AdapterV
     private TextView mShowResultMessage;
     private TextView mShowCorrectAns;
     private Button mButtonSubNext;
+    private boolean mCountdownToggle;
+    private CountDownTimer mCountDownTimer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,8 +92,45 @@ public class IdentifyBreedActivity extends AppCompatActivity implements AdapterV
             spinner.setAdapter(adapter);
         }
 
+
+        //------------Game, if Countdown is toggled on
+        // check if the countdown timer is on and run the countdown timer here, else follow the normal method
+
+        mCountdownToggle = getIntent().getExtras().getBoolean("Countdown");         // getting the status of the switch in the main screen
+
+        if (mCountdownToggle) {
+
+            mCountDownTimer = new CountDownTimer(10000, 1000) {
+
+                public void onTick(long millisUntilFinished) {
+                    System.out.println("Waiting for 10 secs...");
+                }
+
+                public void onFinish() {
+                    if (mButtonSubNext.getText().equals("Submit")) {             // checking if Next button was clicked by the user
+//                        "Submit" will be shown only if Next was clicked
+                        getResult();            // follow steps to display result
+
+                        //repeating should be done only when the "Next button is clicked"
+//                        start();            // this will get the CountDownTimer to repeat
+                    }
+                }
+
+            }.start();
+
+        } else {
+            // proceed with the normal game flow, without the countdown timer
+        }
+
     }
 
+    @Override
+    protected void onDestroy() {                // when going back to the main menu
+        super.onDestroy();
+        if (mCountdownToggle) {         // only if the countdown toggle had been turned on
+            mCountDownTimer.cancel();           // stopping the countdown running in the background
+        }
+    }
 
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -182,6 +221,11 @@ public class IdentifyBreedActivity extends AppCompatActivity implements AdapterV
 
 
     public void submitCheck(View view) {
+        getResult();            // follow steps to display result
+    }
+
+
+    public void getResult() {         // steps that are followed when the result is required to be shown
         if (mButtonSubNext.getText().equals("Submit")) {        // Submit has been clicked
             if (selectedSpinnerLabel.equals(randomBreed)) {
                 mShowResultMessage.setText("CORRECT!");
@@ -194,13 +238,25 @@ public class IdentifyBreedActivity extends AppCompatActivity implements AdapterV
                 mShowCorrectAns.setTextColor(Color.BLUE);
             }
             mButtonSubNext.setText("Next");
+
+            if (mCountdownToggle) {
+                mCountDownTimer.cancel();           // reset the countdown timer, for new image, if "Submit" was clicked before the countdown ended
+            }
+
         } else {            // Next has been clicked
+
             mButtonSubNext.setText("Submit");
             mShowResultMessage.setText("");
             mShowCorrectAns.setText("");
 
-            displayRandomImage();       // display new random image
 
+            if (mCountdownToggle) {
+                mCountDownTimer.start();            // start the count down timer
+                displayRandomImage();       // display new random image
+            } else {
+                displayRandomImage();       // display new random image
+            }
         }
     }
+
 }
