@@ -9,6 +9,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
@@ -17,6 +18,7 @@ public class SearchBreedActivity extends AppCompatActivity {
     public String allDogBreeds[] = {"Chihuahua", "Afghan Hound", "Basset", "Blood Hound", "Australian Terrier",
             "Golden Retriever", "Labrador Retriever", "Old English Sheepdog", "Rottweiler", "Greater Swiss Mountain Dog", "Dingo"};
 
+    List<String> allBreeds = new ArrayList<>();
 
     // Arrays that reference to the dog images categorized as breed.
     String[] imagesChihuahua = {"n02085620_242", "n02085620_326", "n02085620_473", "n02085620_477", "n02085620_2887", "n02085620_4441", "n02085620_9654", "n02085620_10074", "n02085620_10976", "n02085620_11696"};
@@ -55,6 +57,7 @@ public class SearchBreedActivity extends AppCompatActivity {
         mImgDisplay = findViewById(R.id.search_random_image);
 
 
+        allBreeds.addAll(Arrays.asList(allDogBreeds));              // adding all the array elements into an arraylist for convenience of checking 'contains'
     }
 
 
@@ -65,80 +68,78 @@ public class SearchBreedActivity extends AppCompatActivity {
         shownImages.clear();                // if images can be repeated after restarting, after pressing the Stop button
 
 
-        // have if else.---------------------------->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-        // if available in the array, pass the string to showSlideShow() function.
+        if (allBreeds.contains(mBreedText.getText().toString())) {
+            // if available in the array of allDogBreeds, pass the string to showSlideShow() function.
 
+            showSlideShow(mBreedText.getText().toString());         // display initial image
 
-        showSlideShow(mBreedText.getText().toString());         // display initial image
+            new CountDownTimer(5000, 1000) {
 
+                public void onTick(long millisUntilFinished) {
+                    System.out.println("Waiting for 5 secs...");
+                }
 
-        //        do {          // loop until the stop button is pressed
+                public void onFinish() {
+                    if (!stopHandler) {         // if the Stop button hasn't been pressed
+                        showSlideShow(mBreedText.getText().toString());         // display new image after every  5 secs
 
-//FIX THE LOOP----------------->>>>>>>>>>>>>>>>>>>>>>>
+                        start();            // this will get the CountDownTimer to repeat
+                    }
+                }
 
+            }.start();
 
-//            // Need to give a waiting time (break) before reiterating the loop!!!!!!!!!!!!!!!!
-//            // Need to have a countdown timer and keep changing the images------------------------->>>>>>>>>>>>>
-
-        new CountDownTimer(5000, 1000) {
-
-            public void onTick(long millisUntilFinished) {
-                System.out.println(millisUntilFinished);
-            }
-
-            public void onFinish() {
-                showSlideShow(mBreedText.getText().toString());         // display new image after every  5 secs
-            }
-
-        }.start();
-
-//        } while (!stopHandler);
-
+        } else{
+            // Display Toast message to enter valid breed name/ images of entered breed name couldn't be found >>>>>>>>>>
+        }
     }
 
 
     public void showSlideShow(final String breedName) {            // display slide show operation
 
+        do {            // making sure that the same images aren't repeated
+            // this will run in an infinite loop once all the images are displayed.
 
-        // shuffle images related to breed name and pass into resource
-        int randomImageIndex = getRandomImage();                // get a random image of a particular breed
+            // shuffle images related to breed name and pass into resource
+            int randomImageIndex = getRandomImage();                // get a random image of a particular breed
 
-        switch (breedName) {
-            case "Chihuahua":
-                randomImageOfChosenBreed = imagesChihuahua[randomImageIndex];     // get a random image reference
-                break;
-            case "Afghan Hound":
-                randomImageOfChosenBreed = imagesAfghanHound[randomImageIndex];     // get a random image reference
-                break;
-            case "Basset":
-                randomImageOfChosenBreed = imagesBasset[randomImageIndex];     // get a random image reference
-                break;
-            case "Blood Hound":
-                randomImageOfChosenBreed = imagesBloodHound[randomImageIndex];     // get a random image reference
-                break;
-            case "Australian Terrier":
-                randomImageOfChosenBreed = imagesAustralianTerrier[randomImageIndex];     // get a random image reference
-                break;
-            case "Golden Retriever":
-                randomImageOfChosenBreed = imagesGoldenRetriever[randomImageIndex];     // get a random image reference
-                break;
-            case "Labrador Retriever":
-                randomImageOfChosenBreed = imagesLabradorRetriever[randomImageIndex];     // get a random image reference
-                break;
-            case "Old English Sheepdog":
-                randomImageOfChosenBreed = imagesOldEnglishSheep[randomImageIndex];     // get a random image reference
-                break;
-            case "Rottweiler":
-                randomImageOfChosenBreed = imagesRottweiler[randomImageIndex];     // get a random image reference
-                break;
-            case "Greater Swiss Mountain Dog":
-                randomImageOfChosenBreed = imagesGreaterSwissMountainDog[randomImageIndex];     // get a random image reference
-                break;
-            case "Dingo":
-                randomImageOfChosenBreed = imagesDingo[randomImageIndex];     // get a random image reference
+            switch (breedName) {
+                case "Chihuahua":
+                    randomImageOfChosenBreed = imagesChihuahua[randomImageIndex];     // get a random image reference
+                    break;
+                case "Afghan Hound":
+                    randomImageOfChosenBreed = imagesAfghanHound[randomImageIndex];     // get a random image reference
+                    break;
+                case "Basset":
+                    randomImageOfChosenBreed = imagesBasset[randomImageIndex];     // get a random image reference
+                    break;
+                case "Blood Hound":
+                    randomImageOfChosenBreed = imagesBloodHound[randomImageIndex];     // get a random image reference
+                    break;
+                case "Australian Terrier":
+                    randomImageOfChosenBreed = imagesAustralianTerrier[randomImageIndex];     // get a random image reference
+                    break;
+                case "Golden Retriever":
+                    randomImageOfChosenBreed = imagesGoldenRetriever[randomImageIndex];     // get a random image reference
+                    break;
+                case "Labrador Retriever":
+                    randomImageOfChosenBreed = imagesLabradorRetriever[randomImageIndex];     // get a random image reference
+                    break;
+                case "Old English Sheepdog":
+                    randomImageOfChosenBreed = imagesOldEnglishSheep[randomImageIndex];     // get a random image reference
+                    break;
+                case "Rottweiler":
+                    randomImageOfChosenBreed = imagesRottweiler[randomImageIndex];     // get a random image reference
+                    break;
+                case "Greater Swiss Mountain Dog":
+                    randomImageOfChosenBreed = imagesGreaterSwissMountainDog[randomImageIndex];     // get a random image reference
+                    break;
+                case "Dingo":
+                    randomImageOfChosenBreed = imagesDingo[randomImageIndex];     // get a random image reference
 //            default:
 
-        }
+            }
+        }while (shownImages.contains(randomImageOfChosenBreed));
 
         shownImages.add(randomImageOfChosenBreed);          // to show unique images of a chosen breed
 

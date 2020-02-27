@@ -12,22 +12,22 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="150dp"
         android:background="#B40606"
+        android:onClick="stopShow"
         android:text="@string/stop_label"
         android:textAllCaps="false"
         android:textColor="#FFFFFF"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/search_random_image"
-        android:onClick="stopShow"/>
+        app:layout_constraintTop_toBottomOf="@+id/search_random_image" />
 
     <Button
         android:id="@+id/submit_button_search"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
-        android:text="@string/button_label_submit"
         android:onClick="submitBreed"
+        android:text="@string/button_label_submit"
         android:textAllCaps="false"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
