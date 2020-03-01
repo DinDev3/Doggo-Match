@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -36,11 +37,14 @@ public class IdentifyDogActivity extends AppCompatActivity {
     public String randomBreed;
     public String randomImageOfChosenBreed;
     private String questionBreed;
-    private boolean flagPicked;         // used to check if an image was selected
+    private boolean isFlagFirstPick;         // used to check if one image was selected  -  to make sure that the user can't take multiple chances
+//    private boolean isFlagPicked;            // to check whether an image was chosen at all -  needed for countdown
 
     private TextView mBreedNameLabel;
     private ImageView mPickedImage;
     private TextView mShowResultMessage;
+    private boolean mCountdownToggle;
+    private CountDownTimer mCountDownTimer;
 
 
     @Override
@@ -56,7 +60,41 @@ public class IdentifyDogActivity extends AppCompatActivity {
         mBreedNameLabel = /*(TextView)*/ findViewById(R.id.breed_name_label);         // Connecting TextView to variable
         mShowResultMessage = /*(TextView)*/ findViewById(R.id.result_text);         // Connecting TextView to variable
 
-        showImageSet();
+        showImageSet();         // display initial set of images
+
+        //------------Game, if Countdown is toggled on
+        // check if the countdown timer is on and run the countdown timer here, else follow the normal method
+
+        mCountdownToggle = getIntent().getExtras().getBoolean("Countdown");         // getting the status of the switch in the main screen
+
+        if (mCountdownToggle) {
+
+            mCountDownTimer = new CountDownTimer(10000, 1000) {
+
+                public void onTick(long millisUntilFinished) {
+                    System.out.println("Waiting for 10 secs...");
+                }
+
+                public void onFinish() {
+                    displayResult();            // follow steps to display result
+
+                    //repeating should be done only when the "Next button is clicked"
+                }
+
+            }.start();
+
+        } else {
+            // proceed with the normal game flow, without the countdown timer
+        }
+
+    }
+
+    @Override
+    protected void onDestroy() {                // when going back to the main menu
+        super.onDestroy();
+        if (mCountdownToggle) {         // only if the countdown toggle had been turned on
+            mCountDownTimer.cancel();           // stopping the countdown running in the background
+        }
     }
 
 
@@ -156,7 +194,11 @@ public class IdentifyDogActivity extends AppCompatActivity {
 
     public void showNextImageSet(View view) {       // when "Next" button is clicked, shows new set of images
         displayingBreeds.clear();           // for a new set of image breeds
-        flagPicked = false;             // resetting the flag for picking an image
+        isFlagFirstPick = false;             // resetting the flag for picking an image
+
+        if (mCountdownToggle) {
+            mCountDownTimer.start();            // start the count down timer
+        }
         showImageSet();
     }
 
@@ -178,18 +220,33 @@ public class IdentifyDogActivity extends AppCompatActivity {
 
 
     public void displayResult() {
-        System.out.println(mPickedImage.getTag());          // To check whether the chosen image gave the correct tag
 
-        if (!flagPicked) {
-            flagPicked = true;
-            if (mPickedImage.getTag().equals(questionBreed)) {        // If the displayed breed was picked properly
-                mShowResultMessage.setText("CORRECT!");
-                mShowResultMessage.setTextColor(Color.parseColor("#00E676"));
+        try {
+            System.out.println(mPickedImage.getTag());          // To check whether the chosen image gave the correct tag
 
-            } else {
-                mShowResultMessage.setText("WRONG!");
-                mShowResultMessage.setTextColor(Color.RED);
+            // choosing an image after the countdown is over is possible once
+            if (!isFlagFirstPick) {
+                isFlagFirstPick = true;
+                if (mPickedImage.getTag().equals(questionBreed)) {        // If the displayed breed was picked properly
+                    mShowResultMessage.setText("CORRECT!");
+                    mShowResultMessage.setTextColor(Color.parseColor("#00E676"));
+
+                } else {
+                    mShowResultMessage.setText("WRONG!");
+                    mShowResultMessage.setTextColor(Color.RED);
+                }
             }
+            mPickedImage = null;        // need for countdown game -> otherwise previous image selected position will be taken
+
+            // can't do with set tag as it's done when the images are loaded
+        } catch (Exception e){          // will come here, if no image was chosen -> needed for the countdown game
+            mShowResultMessage.setText("Time's up!");
+            mShowResultMessage.setTextColor(Color.BLUE);
         }
+
+        if (mCountdownToggle) {
+            mCountDownTimer.cancel();           // reset the countdown timer, for new image, if "Submit" was clicked before the countdown ended
+        }
+
     }
 }

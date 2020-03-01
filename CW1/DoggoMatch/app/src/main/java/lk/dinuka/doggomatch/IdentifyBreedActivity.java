@@ -50,6 +50,7 @@ public class IdentifyBreedActivity extends AppCompatActivity implements AdapterV
     private Button mButtonSubNext;
     private boolean mCountdownToggle;
     private CountDownTimer mCountDownTimer;
+//    private TextView mCountDownText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,6 +100,8 @@ public class IdentifyBreedActivity extends AppCompatActivity implements AdapterV
         mCountdownToggle = getIntent().getExtras().getBoolean("Countdown");         // getting the status of the switch in the main screen
 
         if (mCountdownToggle) {
+//            mCountDownText = findViewById(R.id.timer_text);
+//            mCountDownText.setVisibility(View.VISIBLE);             // show countdown timer
 
             mCountDownTimer = new CountDownTimer(10000, 1000) {
 
@@ -252,10 +255,9 @@ public class IdentifyBreedActivity extends AppCompatActivity implements AdapterV
 
             if (mCountdownToggle) {
                 mCountDownTimer.start();            // start the count down timer
-                displayRandomImage();       // display new random image
-            } else {
-                displayRandomImage();       // display new random image
             }
+
+            displayRandomImage();       // display new random image
         }
     }
 
