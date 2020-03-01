@@ -50,7 +50,7 @@ public class IdentifyBreedActivity extends AppCompatActivity implements AdapterV
     private Button mButtonSubNext;
     private boolean mCountdownToggle;
     private CountDownTimer mCountDownTimer;
-//    private TextView mCountDownText;
+    private TextView mCountDownText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,18 +100,22 @@ public class IdentifyBreedActivity extends AppCompatActivity implements AdapterV
         mCountdownToggle = getIntent().getExtras().getBoolean("Countdown");         // getting the status of the switch in the main screen
 
         if (mCountdownToggle) {
-//            mCountDownText = findViewById(R.id.timer_text);
-//            mCountDownText.setVisibility(View.VISIBLE);             // show countdown timer
+            mCountDownText = findViewById(R.id.timer_text);
+            mCountDownText.setVisibility(View.VISIBLE);             // show countdown timer
 
             mCountDownTimer = new CountDownTimer(10000, 1000) {
 
                 public void onTick(long millisUntilFinished) {
-                    System.out.println("Waiting for 10 secs...");
+                    int timeLeft = (int)(1 + (millisUntilFinished/1000));
+                    mCountDownText.setText(Integer.toString(timeLeft));
+                    System.out.println("Waiting for "+timeLeft+" secs...");
+
                 }
 
                 public void onFinish() {
                     if (mButtonSubNext.getText().equals("Submit")) {             // checking if Next button was clicked by the user
 //                        "Submit" will be shown only if Next was clicked
+                        mCountDownText.setText(Integer.toString(0));
                         getResult();            // follow steps to display result
 
                         //repeating should be done only when the "Next button is clicked"
