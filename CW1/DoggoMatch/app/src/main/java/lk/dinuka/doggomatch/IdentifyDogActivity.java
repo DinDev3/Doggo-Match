@@ -45,6 +45,7 @@ public class IdentifyDogActivity extends AppCompatActivity {
     private TextView mShowResultMessage;
     private boolean mCountdownToggle;
     private CountDownTimer mCountDownTimer;
+    private TextView mCountDownText;
 
 
     @Override
@@ -68,14 +69,19 @@ public class IdentifyDogActivity extends AppCompatActivity {
         mCountdownToggle = getIntent().getExtras().getBoolean("Countdown");         // getting the status of the switch in the main screen
 
         if (mCountdownToggle) {
+            mCountDownText = findViewById(R.id.timer_text);
+            mCountDownText.setVisibility(View.VISIBLE);             // show countdown timer
 
             mCountDownTimer = new CountDownTimer(10000, 1000) {
 
                 public void onTick(long millisUntilFinished) {
-                    System.out.println("Waiting for 10 secs...");
+                    int timeLeft = (int)(1 + (millisUntilFinished/1000));
+                    mCountDownText.setText(Integer.toString(timeLeft));
+                    System.out.println("Waiting for "+timeLeft+" secs...");
                 }
 
                 public void onFinish() {
+                    mCountDownText.setText(Integer.toString(0));
                     displayResult();            // follow steps to display result
 
                     //repeating should be done only when the "Next button is clicked"
