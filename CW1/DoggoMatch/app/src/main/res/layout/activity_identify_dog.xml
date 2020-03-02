@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/backgroundColor"
     tools:context=".IdentifyDogActivity">
 
     <TextView
@@ -32,7 +33,7 @@
 
     <LinearLayout
         android:id="@+id/linearLayout"
-        android:layout_width="190dp"
+        android:layout_width="210dp"
         android:layout_height="470dp"
         android:layout_marginTop="8dp"
         android:orientation="vertical"
@@ -43,7 +44,7 @@
 
         <ImageView
             android:id="@+id/first_dog_image"
-            android:layout_width="190dp"
+            android:layout_width="210dp"
             android:layout_height="150dp"
             android:contentDescription="@string/image_of_first_dog_description"
             android:onClick="checkAnswerFirst"
@@ -52,7 +53,7 @@
 
         <ImageView
             android:id="@+id/second_dog_image"
-            android:layout_width="190dp"
+            android:layout_width="210dp"
             android:layout_height="150dp"
             android:contentDescription="@string/image_of_second_dog_description"
             android:onClick="checkAnswerSecond"
@@ -61,7 +62,7 @@
 
         <ImageView
             android:id="@+id/third_dog_image"
-            android:layout_width="190dp"
+            android:layout_width="210dp"
             android:layout_height="150dp"
             android:contentDescription="@string/image_of_third_dog_description"
             android:onClick="checkAnswerThird"

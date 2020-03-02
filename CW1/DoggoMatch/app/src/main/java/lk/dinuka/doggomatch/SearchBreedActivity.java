@@ -2,9 +2,11 @@ package lk.dinuka.doggomatch;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 
@@ -67,6 +69,7 @@ public class SearchBreedActivity extends AppCompatActivity {
         stopHandler = false;            // getting rid of the stop handler, to access the loop
         shownImages.clear();                // if images can be repeated after restarting, after pressing the Stop button
 
+        closeKeyboard();            // to close the keyboard
 
         if (allBreeds.contains(mBreedText.getText().toString())) {
             // if available in the array of allDogBreeds, pass the string to showSlideShow() function.
@@ -89,8 +92,16 @@ public class SearchBreedActivity extends AppCompatActivity {
 
             }.start();
 
-        } else{
+        } else {
             // Display Toast message to enter valid breed name/ images of entered breed name couldn't be found >>>>>>>>>>
+        }
+    }
+
+    private void closeKeyboard() {      // to close the keyboard when submit button is clicked, to make it easier for the user
+        View view = this.getCurrentFocus();         // getting whatever view that is currently focused on
+        if (view != null) {
+            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(),0);
         }
     }
 
@@ -139,7 +150,7 @@ public class SearchBreedActivity extends AppCompatActivity {
 //            default:
 
             }
-        }while (shownImages.contains(randomImageOfChosenBreed));
+        } while (shownImages.contains(randomImageOfChosenBreed));
 
         shownImages.add(randomImageOfChosenBreed);          // to show unique images of a chosen breed
 
@@ -160,3 +171,13 @@ public class SearchBreedActivity extends AppCompatActivity {
         stopHandler = true;
     }
 }
+
+
+/*
+References:
+
+Hide soft-keyboard
+https://www.youtube.com/watch?v=CW5Xekqfx3I
+
+
+ */
