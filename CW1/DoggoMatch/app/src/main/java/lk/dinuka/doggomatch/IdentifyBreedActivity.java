@@ -136,10 +136,10 @@ public class IdentifyBreedActivity extends AppCompatActivity implements AdapterV
 
             //------------Game, if Countdown is toggled on
             // check if the countdown timer is on and run the countdown timer here, else follow the normal method
-            long setTime = 10000;
+            final long SET_TIME = 10000;
 
             if (mCountdownToggle) {
-                runTimer(setTime);
+                runTimer(SET_TIME);
 
             } else {
                 // proceed with the normal game flow, without the countdown timer
@@ -153,7 +153,6 @@ public class IdentifyBreedActivity extends AppCompatActivity implements AdapterV
     protected void onDestroy() {                // when going back to the main menu
         super.onDestroy();
 
-        //do this only if the game is closed (going back to the main menu)----------------->>>>>>>>>>>>
         if (mCountdownToggle) {         // only if the countdown toggle had been turned on
             mCountDownTimer.cancel();           // stopping the countdown running in the background
         }

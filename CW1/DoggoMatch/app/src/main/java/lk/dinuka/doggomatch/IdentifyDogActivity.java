@@ -1,10 +1,12 @@
 package lk.dinuka.doggomatch;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.PersistableBundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -33,12 +35,15 @@ public class IdentifyDogActivity extends AppCompatActivity {
 
     List<String> allDisplayedImages = new ArrayList<>();        // all the displayed images are added here. To make sure that images aren't repeated
     private List<String> displayingBreeds = new ArrayList<>();        // the 3 displayed breeds will be here. To make sure that multiple images of the same breed won't be shown together
+    private List<Integer> displayingImageIndexes = new ArrayList<>();        // the 3 displayed image indexes will be here. To reload the images when the device is rotated.
 
     public String randomBreed;
     public String randomImageOfChosenBreed;
-    private String questionBreed;
+    private String questionBreed;           // Breed that is displayed as the question
     private boolean isFlagFirstPick;         // used to check if one image was selected  -  to make sure that the user can't take multiple chances
-//    private boolean isFlagPicked;            // to check whether an image was chosen at all -  needed for countdown
+    //    private boolean isFlagPicked;            // to check whether an image was chosen at all -  needed for countdown
+    private long countdownTime;          // used to pass the remaining countdown time into the saved state when the device is rotated
+
 
     private TextView mBreedNameLabel;
     private ImageView mPickedImage;
@@ -61,37 +66,83 @@ public class IdentifyDogActivity extends AppCompatActivity {
         mBreedNameLabel = /*(TextView)*/ findViewById(R.id.breed_name_label);         // Connecting TextView to variable
         mShowResultMessage = /*(TextView)*/ findViewById(R.id.result_text);         // Connecting TextView to variable
 
-        showImageSet();         // display initial set of images
-
-        //------------Game, if Countdown is toggled on
-        // check if the countdown timer is on and run the countdown timer here, else follow the normal method
-
         mCountdownToggle = getIntent().getExtras().getBoolean("Countdown");         // getting the status of the switch in the main screen
 
-        if (mCountdownToggle) {
-            mCountDownText = findViewById(R.id.timer_text);
-            mCountDownText.setVisibility(View.VISIBLE);             // show countdown timer
 
-            mCountDownTimer = new CountDownTimer(10000, 1000) {
+        // restore the state
+        if (savedInstanceState != null) {           // if screen was rotated and activity was restarted
 
-                public void onTick(long millisUntilFinished) {
-                    int timeLeft = (int)(1 + (millisUntilFinished/1000));
-                    mCountDownText.setText(Integer.toString(timeLeft));
-                    System.out.println("Waiting for "+timeLeft+" secs...");
-                }
+            countdownTime = savedInstanceState.getLong("time_left");
+            questionBreed = savedInstanceState.getString("question_breed");
+            displayingBreeds = savedInstanceState.getStringArrayList("displaying_three");
+            allDisplayedImages = savedInstanceState.getStringArrayList("all_displayed_images");
+            displayingImageIndexes = savedInstanceState.getIntegerArrayList("all_displayed_image_indexes");
 
-                public void onFinish() {
-                    mCountDownText.setText(Integer.toString(0));
-                    displayResult();            // follow steps to display result
+            CharSequence resultText = savedInstanceState.getCharSequence("result_text");
 
-                    //repeating should be done only when the "Next button is clicked"
-                }
+            if (resultText.toString().equals("CORRECT!")) {
+                mShowResultMessage.setTextColor(Color.parseColor("#00E676"));
+            } else if (resultText.toString().equals("WRONG!")) {
+                mShowResultMessage.setTextColor(Color.RED);
+            } else if (resultText.toString().equals("Time's up!")) {
+                mShowResultMessage.setTextColor(Color.BLUE);
+            }
+            mShowResultMessage.setText(resultText);
 
-            }.start();
+            mBreedNameLabel.setText(questionBreed);
 
-        } else {
-            // proceed with the normal game flow, without the countdown timer
+
+            // Display images that were already shown ------------------
+            ImageView imageDogFirst = findViewById(R.id.first_dog_image);
+            ImageView imageDogSecond = findViewById(R.id.second_dog_image);
+            ImageView imageDogThird = findViewById(R.id.third_dog_image);
+
+            String imageOne = displayRelevantImage(displayingBreeds.get(0), displayingImageIndexes.get(0));
+            String imageTwo = displayRelevantImage(displayingBreeds.get(1), displayingImageIndexes.get(1));
+            String imageThree = displayRelevantImage(displayingBreeds.get(2), displayingImageIndexes.get(2));
+
+            imageDogFirst.setImageResource(getResources().getIdentifier(imageOne, "drawable", "lk.dinuka.doggomatch"));
+            imageDogFirst.setTag(displayingBreeds.get(0));          // displayingBreeds ArrayList will have the Breed names in order of adding
+            imageDogSecond.setImageResource(getResources().getIdentifier(imageTwo, "drawable", "lk.dinuka.doggomatch"));
+            imageDogSecond.setTag(displayingBreeds.get(1));
+            imageDogThird.setImageResource(getResources().getIdentifier(imageThree, "drawable", "lk.dinuka.doggomatch"));
+            imageDogThird.setTag(displayingBreeds.get(2));
+
+
+            if (mCountdownToggle) {
+                runTimer(countdownTime);
+            }
+
+
+        } else {            // if activity was created for the first time (opened)
+
+            showImageSet();         // display initial set of images
+
+            //------------Game, if Countdown is toggled on
+            // check if the countdown timer is on and run the countdown timer here, else follow the normal method
+            final long SET_TIME = 10000;
+
+            if (mCountdownToggle) {
+                runTimer(SET_TIME);
+
+            } else {
+                // proceed with the normal game flow, without the countdown timer
+            }
+
         }
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        outState.putLong("time_left", countdownTime);          // time left in countdown timer
+        outState.putString("question_breed", questionBreed);
+        outState.putStringArrayList("displaying_three", (ArrayList<String>) displayingBreeds);
+        outState.putStringArrayList("all_displayed_images", (ArrayList<String>) allDisplayedImages);
+        outState.putIntegerArrayList("all_displayed_image_indexes", (ArrayList<Integer>) displayingImageIndexes);
+
+        outState.putCharSequence("result_text", mShowResultMessage.getText());
 
     }
 
@@ -123,58 +174,68 @@ public class IdentifyDogActivity extends AppCompatActivity {
 
     public int displayRandomImage() {           // method used to display a random image of a random breed
 
+        int randomImageIndex;
+
         do
         {            // making sure that the same images aren't repeated & images of the same breed aren't shown together
             // this will run in an infinite loop once all the images are displayed.
 
             randomBreed = allDogBreeds[getRandomBreed()];           // get a random breed
-            int randomImageIndex = getRandomImage();                // get a random image of a particular breed
+            randomImageIndex = getRandomImage();                // get a random image of a particular breed
 
-            switch (randomBreed) {
-                case "Chihuahua":
-                    randomImageOfChosenBreed = imagesChihuahua[randomImageIndex];     // get a random image reference
-                    break;
-                case "Afghan Hound":
-                    randomImageOfChosenBreed = imagesAfghanHound[randomImageIndex];     // get a random image reference
-                    break;
-                case "Basset":
-                    randomImageOfChosenBreed = imagesBasset[randomImageIndex];     // get a random image reference
-                    break;
-                case "Blood Hound":
-                    randomImageOfChosenBreed = imagesBloodHound[randomImageIndex];     // get a random image reference
-                    break;
-                case "Australian Terrier":
-                    randomImageOfChosenBreed = imagesAustralianTerrier[randomImageIndex];     // get a random image reference
-                    break;
-                case "Golden Retriever":
-                    randomImageOfChosenBreed = imagesGoldenRetriever[randomImageIndex];     // get a random image reference
-                    break;
-                case "Labrador Retriever":
-                    randomImageOfChosenBreed = imagesLabradorRetriever[randomImageIndex];     // get a random image reference
-                    break;
-                case "Old English Sheepdog":
-                    randomImageOfChosenBreed = imagesOldEnglishSheep[randomImageIndex];     // get a random image reference
-                    break;
-                case "Rottweiler":
-                    randomImageOfChosenBreed = imagesRottweiler[randomImageIndex];     // get a random image reference
-                    break;
-                case "Greater Swiss Mountain Dog":
-                    randomImageOfChosenBreed = imagesGreaterSwissMountainDog[randomImageIndex];     // get a random image reference
-                    break;
-                case "Dingo":
-                    randomImageOfChosenBreed = imagesDingo[randomImageIndex];     // get a random image reference
-            }
+            randomImageOfChosenBreed = displayRelevantImage(randomBreed, randomImageIndex);
 //            System.out.println(allDisplayedImages);         // to check whether the arrayList is getting updated
 
         } while (allDisplayedImages.contains(randomImageOfChosenBreed) || displayingBreeds.contains(randomBreed));
 
         allDisplayedImages.add(randomImageOfChosenBreed);           // to make sure that the image isn't repeated
         displayingBreeds.add(randomBreed);                          // to make sure that images of the same breed aren't shown at once
+        displayingImageIndexes.add(randomImageIndex);               // to recall indexes when the device is rotated
 
         // return chosen random image
         return getResources().getIdentifier(randomImageOfChosenBreed, "drawable", "lk.dinuka.doggomatch");
     }
 
+
+    public String displayRelevantImage(String randomBreed, int randomImageIndex) {         // display a chosen image
+        switch (randomBreed) {
+            case "Chihuahua":
+                randomImageOfChosenBreed = imagesChihuahua[randomImageIndex];     // get a random image reference
+                break;
+            case "Afghan Hound":
+                randomImageOfChosenBreed = imagesAfghanHound[randomImageIndex];     // get a random image reference
+                break;
+            case "Basset":
+                randomImageOfChosenBreed = imagesBasset[randomImageIndex];     // get a random image reference
+                break;
+            case "Blood Hound":
+                randomImageOfChosenBreed = imagesBloodHound[randomImageIndex];     // get a random image reference
+                break;
+            case "Australian Terrier":
+                randomImageOfChosenBreed = imagesAustralianTerrier[randomImageIndex];     // get a random image reference
+                break;
+            case "Golden Retriever":
+                randomImageOfChosenBreed = imagesGoldenRetriever[randomImageIndex];     // get a random image reference
+                break;
+            case "Labrador Retriever":
+                randomImageOfChosenBreed = imagesLabradorRetriever[randomImageIndex];     // get a random image reference
+                break;
+            case "Old English Sheepdog":
+                randomImageOfChosenBreed = imagesOldEnglishSheep[randomImageIndex];     // get a random image reference
+                break;
+            case "Rottweiler":
+                randomImageOfChosenBreed = imagesRottweiler[randomImageIndex];     // get a random image reference
+                break;
+            case "Greater Swiss Mountain Dog":
+                randomImageOfChosenBreed = imagesGreaterSwissMountainDog[randomImageIndex];     // get a random image reference
+                break;
+            case "Dingo":
+                randomImageOfChosenBreed = imagesDingo[randomImageIndex];     // get a random image reference
+        }
+        // return chosen random image
+        return randomImageOfChosenBreed;
+
+    }
 
     public int getRandomBreed() {
         //get random number between 0-10 (index range for 11 breeds in the array)
@@ -200,6 +261,8 @@ public class IdentifyDogActivity extends AppCompatActivity {
 
     public void showNextImageSet(View view) {       // when "Next" button is clicked, shows new set of images
         displayingBreeds.clear();           // for a new set of image breeds
+        displayingImageIndexes.clear();           // for a new set of images
+
         isFlagFirstPick = false;             // resetting the flag for picking an image
 
         if (mCountdownToggle) {
@@ -245,7 +308,7 @@ public class IdentifyDogActivity extends AppCompatActivity {
             mPickedImage = null;        // need for countdown game -> otherwise previous image selected position will be taken
 
             // can't do with set tag as it's done when the images are loaded
-        } catch (Exception e){          // will come here, if no image was chosen -> needed for the countdown game
+        } catch (Exception e) {          // will come here, if no image was chosen -> needed for the countdown game
             mShowResultMessage.setText("Time's up!");
             mShowResultMessage.setTextColor(Color.BLUE);
         }
@@ -255,4 +318,29 @@ public class IdentifyDogActivity extends AppCompatActivity {
         }
 
     }
+
+    public void runTimer(long setTime) {
+        mCountDownText = findViewById(R.id.timer_text);
+        mCountDownText.setVisibility(View.VISIBLE);             // show countdown timer
+
+        mCountDownTimer = new CountDownTimer(setTime, 1000) {
+
+            public void onTick(long millisUntilFinished) {
+                int timeLeft = (int) (1 + (millisUntilFinished / 1000));
+                mCountDownText.setText(Integer.toString(timeLeft));
+                System.out.println("Waiting for " + timeLeft + " secs...");
+                countdownTime = millisUntilFinished;
+            }
+
+            public void onFinish() {
+                mCountDownText.setText(Integer.toString(0));
+                displayResult();            // follow steps to display result
+
+                //repeating should be done only when the "Next button is clicked"
+            }
+
+        }.start();
+
+    }
+
 }
