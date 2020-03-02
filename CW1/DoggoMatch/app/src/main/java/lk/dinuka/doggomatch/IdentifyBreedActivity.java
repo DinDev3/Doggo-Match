@@ -45,6 +45,7 @@ public class IdentifyBreedActivity extends AppCompatActivity implements AdapterV
     public String randomBreed;
     int randomImageIndex;
     public String randomImageOfChosenBreed;
+    private long countdownTime;          // used to pass the remaining countdown time into the saved state when the device is rotated
 
     public String selectedSpinnerLabel;
     private TextView mShowResultMessage;
@@ -94,47 +95,13 @@ public class IdentifyBreedActivity extends AppCompatActivity implements AdapterV
         }
 
 
-        //------------Game, if Countdown is toggled on
-        // check if the countdown timer is on and run the countdown timer here, else follow the normal method
-
-        mCountdownToggle = getIntent().getExtras().getBoolean("Countdown");         // getting the status of the switch in the main screen
-
-        if (mCountdownToggle) {
-            mCountDownText = findViewById(R.id.timer_text);
-            mCountDownText.setVisibility(View.VISIBLE);             // show countdown timer
-
-            mCountDownTimer = new CountDownTimer(10000, 1000) {
-
-                public void onTick(long millisUntilFinished) {
-                    int timeLeft = (int) (1 + (millisUntilFinished / 1000));
-                    mCountDownText.setText(Integer.toString(timeLeft));
-                    System.out.println("Waiting for " + timeLeft + " secs...");
-
-                }
-
-                public void onFinish() {
-                    if (mButtonSubNext.getText().equals("Submit")) {             // checking if Next button was clicked by the user
-//                        "Submit" will be shown only if Next was clicked
-                        mCountDownText.setText(Integer.toString(0));
-                        getResult();            // follow steps to display result
-
-                        //repeating should be done only when the "Next button is clicked"
-//                        start();            // this will get the CountDownTimer to repeat
-                    }
-                }
-
-            }.start();
-
-        } else {
-            // proceed with the normal game flow, without the countdown timer
-        }
-
-
         // restore the state
         if (savedInstanceState != null) {           // if screen was rotated and activity was restarted
 
-            randomBreed = savedInstanceState.getString("displayed_breed");          // this gives null
+            randomBreed = savedInstanceState.getString("displayed_breed");
             randomImageIndex = savedInstanceState.getInt("displayed_index");
+            allDisplayedImages = savedInstanceState.getStringArrayList("displayed_images");
+            countdownTime = savedInstanceState.getLong("time_left");
 
             // getting the String value that comes with the key "displayed_breed"
             displayRelevantImage(randomBreed, randomImageIndex);
@@ -144,15 +111,86 @@ public class IdentifyBreedActivity extends AppCompatActivity implements AdapterV
             int resource_id = getResources().getIdentifier(randomImageOfChosenBreed, "drawable", "lk.dinuka.doggomatch");
             imageDog.setImageResource(resource_id);
 
-            System.out.println(allDisplayedImages);         // savearraylist--------------->>>>>>>>>>>>>
+//            System.out.println(allDisplayedImages);         // to check whether arrayList is saved
 
 
+            // ----------- restore stop watch, if mCountdownToggle was on
             //save stop watch time? ---------------------->>
 
+            mCountdownToggle = getIntent().getExtras().getBoolean("Countdown");         // getting the status of the switch in the main screen
+            System.out.println(mCountdownToggle);
+
+            if (mCountdownToggle) {
+                mCountDownText = findViewById(R.id.timer_text);
+                mCountDownText.setVisibility(View.VISIBLE);             // show countdown timer
+
+                System.out.println(countdownTime);
+
+                mCountDownTimer = new CountDownTimer(countdownTime, 1000) {
+
+                    public void onTick(long millisUntilFinished) {
+                        int timeLeft = (int) (1 + (millisUntilFinished / 1000));
+                        mCountDownText.setText(Integer.toString(timeLeft));
+                        System.out.println("Waiting for " + timeLeft + " secs...");
+                        countdownTime = millisUntilFinished;
+                    }
+
+                    public void onFinish() {
+                        if (mButtonSubNext.getText().equals("Submit")) {             // checking if Next button was clicked by the user
+//                        "Submit" will be shown only if Next was clicked
+                            mCountDownText.setText(Integer.toString(0));
+                            getResult();            // follow steps to display result
+
+                            //repeating should be done only when the "Next button is clicked"
+//                        start();            // this will get the CountDownTimer to repeat
+                        }
+                    }
+
+                }.start();
+            }
 
         } else {            // if activity was created for the first time (opened)
             //----------Display random image
             displayRandomImage();
+
+            //------------Game, if Countdown is toggled on
+            // check if the countdown timer is on and run the countdown timer here, else follow the normal method
+
+            mCountdownToggle = getIntent().getExtras().getBoolean("Countdown");         // getting the status of the switch in the main screen
+
+            System.out.println(mCountdownToggle);
+
+
+            if (mCountdownToggle) {
+                mCountDownText = findViewById(R.id.timer_text);
+                mCountDownText.setVisibility(View.VISIBLE);             // show countdown timer
+
+                mCountDownTimer = new CountDownTimer(10000, 1000) {
+
+                    public void onTick(long millisUntilFinished) {
+                        int timeLeft = (int) (1 + (millisUntilFinished / 1000));
+                        mCountDownText.setText(Integer.toString(timeLeft));
+                        System.out.println("Waiting for " + timeLeft + " secs...");
+                        countdownTime = millisUntilFinished;
+                    }
+
+                    public void onFinish() {
+                        if (mButtonSubNext.getText().equals("Submit")) {             // checking if Next button was clicked by the user
+//                        "Submit" will be shown only if Next was clicked
+                            mCountDownText.setText(Integer.toString(0));
+                            getResult();            // follow steps to display result
+
+                            //repeating should be done only when the "Next button is clicked"
+//                        start();            // this will get the CountDownTimer to repeat
+                        }
+                    }
+
+                }.start();
+
+            } else {
+                // proceed with the normal game flow, without the countdown timer
+            }
+
         }
 
     }
@@ -160,6 +198,8 @@ public class IdentifyBreedActivity extends AppCompatActivity implements AdapterV
     @Override
     protected void onDestroy() {                // when going back to the main menu
         super.onDestroy();
+
+        //do this only if the game is closed (going back to the main menu)----------------->>>>>>>>>>>>
         if (mCountdownToggle) {         // only if the countdown toggle had been turned on
             mCountDownTimer.cancel();           // stopping the countdown running in the background
         }
@@ -170,9 +210,11 @@ public class IdentifyBreedActivity extends AppCompatActivity implements AdapterV
     protected void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
 
-        outState.putString("displayed_breed", randomBreed);                 // check what can be done here---------->>>>>>>>>>>>>>>>>>>>
-        outState.putInt("displayed_index", randomImageIndex);
+        outState.putString("displayed_breed", randomBreed);         // saving displayed breed
+        outState.putInt("displayed_index", randomImageIndex);       // saving displayed index of chosen image
+        outState.putStringArrayList("displayed_images", (ArrayList<String>) allDisplayedImages);            // saving arrayList of displayed images
 
+        outState.putLong("time_left", countdownTime);          // time left in countdown timer
     }
 
 
