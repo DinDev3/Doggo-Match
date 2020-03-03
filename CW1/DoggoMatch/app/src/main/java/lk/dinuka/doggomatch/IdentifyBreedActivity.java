@@ -154,7 +154,9 @@ public class IdentifyBreedActivity extends AppCompatActivity implements AdapterV
         super.onDestroy();
 
         if (mCountdownToggle) {         // only if the countdown toggle had been turned on
-            mCountDownTimer.cancel();           // stopping the countdown running in the background
+            if (mCountDownTimer != null) {
+                mCountDownTimer.cancel();           // stopping the countdown running in the background
+            }
         }
     }
 
@@ -301,7 +303,8 @@ public class IdentifyBreedActivity extends AppCompatActivity implements AdapterV
 
 
             if (mCountdownToggle) {
-                mCountDownTimer.start();            // start the count down timer
+//                mCountDownTimer.start();            // start the count down timer
+                runTimer(10000);
             }
 
             displayRandomImage();       // display new random image

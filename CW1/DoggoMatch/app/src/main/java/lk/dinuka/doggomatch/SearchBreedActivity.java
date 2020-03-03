@@ -1,5 +1,6 @@
 package lk.dinuka.doggomatch;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
@@ -9,6 +10,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -39,11 +41,15 @@ public class SearchBreedActivity extends AppCompatActivity {
     List<String> shownImages = new ArrayList<>();           // holds all the images that have been displayed
 
 
-    public String randomImageOfChosenBreed;
+    public String randomImageOfChosenBreed;     // the image id of the image
     private boolean stopHandler;                // checks whether the stop button has been pressed
+    private long countdownTime;          // used to pass the remaining countdown time into the saved state when the device is rotated
+    private String chosenBreed;
+    private int randomImageIndex;           // the position of the image in the relevant array
 
     private EditText mBreedText;
     private ImageView mImgDisplay;
+    private CountDownTimer mCountDownTimer;
 
 
     @Override
@@ -60,8 +66,51 @@ public class SearchBreedActivity extends AppCompatActivity {
 
 
         allBreeds.addAll(Arrays.asList(allDogBreeds));              // adding all the array elements into an arraylist for convenience of checking 'contains'
+
+
+        // restore the state
+        if (savedInstanceState != null) {
+            countdownTime = savedInstanceState.getLong("time_left");
+            chosenBreed = savedInstanceState.getString("breed_name");
+            randomImageIndex = savedInstanceState.getInt("displayed_index");
+
+            shownImages = savedInstanceState.getStringArrayList("shown_images");
+
+            displayRelevantImage(chosenBreed, randomImageIndex);             // get the id of the image that was already shown before rotating the device
+
+            // display chosen random image
+            int resource_id = getResources().getIdentifier(randomImageOfChosenBreed, "drawable", "lk.dinuka.doggomatch");
+            mImgDisplay.setImageResource(resource_id);
+
+
+            runTimer(countdownTime);            // run timer from the point it stopped when rotating the device
+
+        } else {
+            // if activity was created for the first time (opened)
+            // User's input is required to continue
+        }
     }
 
+    @Override
+    protected void onDestroy() {                // when going back to the main menu
+        super.onDestroy();
+
+        if (mCountDownTimer != null) {
+            mCountDownTimer.cancel();           // stopping the countdown running in the background
+        }
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        outState.putString("breed_name", chosenBreed);       // breed that was searched for
+        outState.putStringArrayList("shown_images", (ArrayList<String>) shownImages);           // all images that were shown
+        outState.putInt("displayed_index", randomImageIndex);
+
+        outState.putLong("time_left", countdownTime);          // time left in countdown timer
+
+    }
 
     public void submitBreed(View view) {
         mBreedText = findViewById(R.id.enter_breed_text);
@@ -71,26 +120,19 @@ public class SearchBreedActivity extends AppCompatActivity {
 
         closeKeyboard();            // to close the keyboard
 
-        if (allBreeds.contains(mBreedText.getText().toString())) {
+        chosenBreed = mBreedText.getText().toString();
+
+        if (allBreeds.contains(chosenBreed)) {
             // if available in the array of allDogBreeds, pass the string to showSlideShow() function.
 
-            showSlideShow(mBreedText.getText().toString());         // display initial image
+            showSlideShow(chosenBreed);         // display initial image
 
-            new CountDownTimer(5000, 1000) {
+            if (mCountDownTimer != null) {
+                mCountDownTimer.cancel();           // resetting the countdown timer
+            }
 
-                public void onTick(long millisUntilFinished) {
-                    System.out.println("Waiting for 5 secs...");
-                }
 
-                public void onFinish() {
-                    if (!stopHandler) {         // if the Stop button hasn't been pressed
-                        showSlideShow(mBreedText.getText().toString());         // display new image after every  5 secs
-
-                        start();            // this will get the CountDownTimer to repeat
-                    }
-                }
-
-            }.start();
+            runTimer(5000);     // run timer for 5 seconds
 
         } else {
             // Display Toast message to enter valid breed name/ images of entered breed name couldn't be found >>>>>>>>>>
@@ -101,55 +143,20 @@ public class SearchBreedActivity extends AppCompatActivity {
         View view = this.getCurrentFocus();         // getting whatever view that is currently focused on
         if (view != null) {
             InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-            imm.hideSoftInputFromWindow(view.getWindowToken(),0);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
     }
 
 
-    public void showSlideShow(final String breedName) {            // display slide show operation
+    public void showSlideShow(String breedName) {            // display slide show operation
 
         do {            // making sure that the same images aren't repeated
             // this will run in an infinite loop once all the images are displayed.
 
             // shuffle images related to breed name and pass into resource
-            int randomImageIndex = getRandomImage();                // get a random image of a particular breed
+            randomImageIndex = getRandomImage();                // get a random image of a particular breed
 
-            switch (breedName) {
-                case "Chihuahua":
-                    randomImageOfChosenBreed = imagesChihuahua[randomImageIndex];     // get a random image reference
-                    break;
-                case "Afghan Hound":
-                    randomImageOfChosenBreed = imagesAfghanHound[randomImageIndex];     // get a random image reference
-                    break;
-                case "Basset":
-                    randomImageOfChosenBreed = imagesBasset[randomImageIndex];     // get a random image reference
-                    break;
-                case "Blood Hound":
-                    randomImageOfChosenBreed = imagesBloodHound[randomImageIndex];     // get a random image reference
-                    break;
-                case "Australian Terrier":
-                    randomImageOfChosenBreed = imagesAustralianTerrier[randomImageIndex];     // get a random image reference
-                    break;
-                case "Golden Retriever":
-                    randomImageOfChosenBreed = imagesGoldenRetriever[randomImageIndex];     // get a random image reference
-                    break;
-                case "Labrador Retriever":
-                    randomImageOfChosenBreed = imagesLabradorRetriever[randomImageIndex];     // get a random image reference
-                    break;
-                case "Old English Sheepdog":
-                    randomImageOfChosenBreed = imagesOldEnglishSheep[randomImageIndex];     // get a random image reference
-                    break;
-                case "Rottweiler":
-                    randomImageOfChosenBreed = imagesRottweiler[randomImageIndex];     // get a random image reference
-                    break;
-                case "Greater Swiss Mountain Dog":
-                    randomImageOfChosenBreed = imagesGreaterSwissMountainDog[randomImageIndex];     // get a random image reference
-                    break;
-                case "Dingo":
-                    randomImageOfChosenBreed = imagesDingo[randomImageIndex];     // get a random image reference
-//            default:
-
-            }
+            displayRelevantImage(breedName, randomImageIndex);
         } while (shownImages.contains(randomImageOfChosenBreed));
 
         shownImages.add(randomImageOfChosenBreed);          // to show unique images of a chosen breed
@@ -157,6 +164,43 @@ public class SearchBreedActivity extends AppCompatActivity {
         int resource_id = getResources().getIdentifier(randomImageOfChosenBreed, "drawable", "lk.dinuka.doggomatch");
         mImgDisplay.setImageResource(resource_id);
 
+    }
+
+    public void displayRelevantImage(String randomBreed, int randomImageIndex) {         // display a chosen image
+        switch (randomBreed) {
+            case "Chihuahua":
+                randomImageOfChosenBreed = imagesChihuahua[randomImageIndex];     // get a random image reference
+                break;
+            case "Afghan Hound":
+                randomImageOfChosenBreed = imagesAfghanHound[randomImageIndex];     // get a random image reference
+                break;
+            case "Basset":
+                randomImageOfChosenBreed = imagesBasset[randomImageIndex];     // get a random image reference
+                break;
+            case "Blood Hound":
+                randomImageOfChosenBreed = imagesBloodHound[randomImageIndex];     // get a random image reference
+                break;
+            case "Australian Terrier":
+                randomImageOfChosenBreed = imagesAustralianTerrier[randomImageIndex];     // get a random image reference
+                break;
+            case "Golden Retriever":
+                randomImageOfChosenBreed = imagesGoldenRetriever[randomImageIndex];     // get a random image reference
+                break;
+            case "Labrador Retriever":
+                randomImageOfChosenBreed = imagesLabradorRetriever[randomImageIndex];     // get a random image reference
+                break;
+            case "Old English Sheepdog":
+                randomImageOfChosenBreed = imagesOldEnglishSheep[randomImageIndex];     // get a random image reference
+                break;
+            case "Rottweiler":
+                randomImageOfChosenBreed = imagesRottweiler[randomImageIndex];     // get a random image reference
+                break;
+            case "Greater Swiss Mountain Dog":
+                randomImageOfChosenBreed = imagesGreaterSwissMountainDog[randomImageIndex];     // get a random image reference
+                break;
+            case "Dingo":
+                randomImageOfChosenBreed = imagesDingo[randomImageIndex];     // get a random image reference
+        }
     }
 
 
@@ -170,6 +214,29 @@ public class SearchBreedActivity extends AppCompatActivity {
     public void stopShow(View view) {           // when Stop button is clicked, the slideshow should be stopped
         stopHandler = true;
     }
+
+    public void runTimer(long setTime) {
+
+        mCountDownTimer = new CountDownTimer(setTime, 1000) {
+
+            public void onTick(long millisUntilFinished) {
+                int timeLeft = (int) (1 + (millisUntilFinished / 1000));
+                System.out.println("Waiting for " + timeLeft + " secs...");
+                countdownTime = millisUntilFinished;
+            }
+
+            public void onFinish() {
+                if (!stopHandler) {         // if the Stop button hasn't been pressed
+                    showSlideShow(chosenBreed);         // display new image after every  5 secs
+
+                    start();            // this will get the CountDownTimer to repeat
+                }
+            }
+
+        }.start();
+
+    }
+
 }
 
 
