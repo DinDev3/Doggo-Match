@@ -6,7 +6,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.os.PersistableBundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -82,11 +81,21 @@ public class IdentifyDogActivity extends AppCompatActivity {
 
             if (resultText.toString().equals("CORRECT!")) {
                 mShowResultMessage.setTextColor(Color.parseColor("#00E676"));
+//                System.out.println(countdownTime);
+//                mCountDownText.setText(String.valueOf((int)countdownTime));           // show time that was left
             } else if (resultText.toString().equals("WRONG!")) {
                 mShowResultMessage.setTextColor(Color.RED);
+//                mCountDownText.setText(String.valueOf((int)countdownTime));           // show time that was left
             } else if (resultText.toString().equals("Time's up!")) {
                 mShowResultMessage.setTextColor(Color.BLUE);
+//                mCountDownText.setText(String.valueOf((int)countdownTime));           // show time that was left
+            } else {
+                if (mCountdownToggle) {
+//                // run the timer only if a result isn't displayed already
+                    runTimer(countdownTime);
+                }
             }
+
             mShowResultMessage.setText(resultText);
 
             mBreedNameLabel.setText(questionBreed);
@@ -109,18 +118,13 @@ public class IdentifyDogActivity extends AppCompatActivity {
             imageDogThird.setTag(displayingBreeds.get(2));
 
 
-            if (mCountdownToggle) {
-                runTimer(countdownTime);
-            }
-
-
         } else {            // if activity was created for the first time (opened)
 
             showImageSet();         // display initial set of images
 
             //------------Game, if Countdown is toggled on
             // check if the countdown timer is on and run the countdown timer here, else follow the normal method
-            final long SET_TIME = 10000;
+            long SET_TIME = 10000;
 
             if (mCountdownToggle) {
                 runTimer(SET_TIME);
@@ -137,6 +141,8 @@ public class IdentifyDogActivity extends AppCompatActivity {
         super.onSaveInstanceState(outState);
 
         outState.putLong("time_left", countdownTime);          // time left in countdown timer
+        // this will pass in null if image is clicked!!!!!!!!!!----------->>>>>>>>>>>>
+
         outState.putString("question_breed", questionBreed);
         outState.putStringArrayList("displaying_three", (ArrayList<String>) displayingBreeds);
         outState.putStringArrayList("all_displayed_images", (ArrayList<String>) allDisplayedImages);
@@ -150,7 +156,9 @@ public class IdentifyDogActivity extends AppCompatActivity {
     protected void onDestroy() {                // when going back to the main menu
         super.onDestroy();
         if (mCountdownToggle) {         // only if the countdown toggle had been turned on
-            mCountDownTimer.cancel();           // stopping the countdown running in the background
+            if (mCountDownTimer != null) {
+                mCountDownTimer.cancel();           // stopping the countdown running in the background
+            }
         }
     }
 
@@ -266,7 +274,8 @@ public class IdentifyDogActivity extends AppCompatActivity {
         isFlagFirstPick = false;             // resetting the flag for picking an image
 
         if (mCountdownToggle) {
-            mCountDownTimer.start();            // start the count down timer
+//            mCountDownTimer.start();            // start the count down timer
+            runTimer(10000);
         }
         showImageSet();
     }
@@ -293,7 +302,7 @@ public class IdentifyDogActivity extends AppCompatActivity {
         try {
             System.out.println(mPickedImage.getTag());          // To check whether the chosen image gave the correct tag
 
-            // choosing an image after the countdown is over is possible once
+            // choosing an image after the countdown is over - is possible once
             if (!isFlagFirstPick) {
                 isFlagFirstPick = true;
                 if (mPickedImage.getTag().equals(questionBreed)) {        // If the displayed breed was picked properly
@@ -315,6 +324,7 @@ public class IdentifyDogActivity extends AppCompatActivity {
 
         if (mCountdownToggle) {
             mCountDownTimer.cancel();           // reset the countdown timer, for new image, if "Submit" was clicked before the countdown ended
+//            System.out.println(1+(countdownTime/1000));
         }
 
     }
