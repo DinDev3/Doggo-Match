@@ -17,6 +17,8 @@
     <string name="random_image_of_breed_description">Random image of dog breed</string>
     <string name="home_dog_image">home_dog_image</string>
     <string name="dog_splashing_image">dog_splashing_image</string>
+    <string name="back_drop_of_paw">Back Drop of Paw</string>
+    <string name="app_logo_description">App Logo</string>
 
 
     <string-array name="breeds_array">

@@ -81,10 +81,11 @@
         app:srcCompat="@drawable/back_img_1" />
 
     <ImageView
-        android:id="@+id/imageView6"
+        android:id="@+id/home_logo_image"
         android:layout_width="207dp"
         android:layout_height="111dp"
         android:layout_marginBottom="260dp"
+        android:contentDescription="@string/app_logo_description"
         app:layout_constraintBottom_toTopOf="@+id/button_identify_breed"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
