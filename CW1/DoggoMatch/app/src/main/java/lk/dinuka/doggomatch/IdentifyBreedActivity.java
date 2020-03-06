@@ -11,6 +11,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -54,6 +55,7 @@ public class IdentifyBreedActivity extends AppCompatActivity implements AdapterV
     private boolean mCountdownToggle;
     private CountDownTimer mCountDownTimer;
     private TextView mCountDownText;
+    private ProgressBar mCountProgress;
 
 
     @Override
@@ -317,16 +319,24 @@ public class IdentifyBreedActivity extends AppCompatActivity implements AdapterV
         mCountDownText = findViewById(R.id.timer_text);
         mCountDownText.setVisibility(View.VISIBLE);             // show countdown timer
 
+        mCountProgress = findViewById(R.id.circular_progress_timer);        // circular progress bar for countdown
+        mCountProgress.setProgress(100);            // resetting progress bar
+
         mCountDownTimer = new CountDownTimer(setTime, 1000) {
 
             public void onTick(long millisUntilFinished) {
                 int timeLeft = (int) (1 + (millisUntilFinished / 1000));
                 mCountDownText.setText(Integer.toString(timeLeft));
+                mCountProgress.setProgress(timeLeft*10);            // updating progress bar
+
+
                 System.out.println("Waiting for " + timeLeft + " secs...");
                 countdownTime = millisUntilFinished;
             }
 
             public void onFinish() {
+                mCountProgress.setProgress(0);            // updating progress bar
+
                 if (mButtonSubNext.getText().equals("Submit")) {             // checking if Next button was clicked by the user
 //                        "Submit" will be shown only if Next was clicked
                     mCountDownText.setText(Integer.toString(0));

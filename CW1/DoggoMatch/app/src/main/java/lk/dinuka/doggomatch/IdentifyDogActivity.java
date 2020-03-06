@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -50,6 +51,7 @@ public class IdentifyDogActivity extends AppCompatActivity {
     private boolean mCountdownToggle;
     private CountDownTimer mCountDownTimer;
     private TextView mCountDownText;
+    private ProgressBar mCountProgress;
 
 
     @Override
@@ -333,16 +335,25 @@ public class IdentifyDogActivity extends AppCompatActivity {
         mCountDownText = findViewById(R.id.timer_text);
         mCountDownText.setVisibility(View.VISIBLE);             // show countdown timer
 
+        mCountProgress = findViewById(R.id.circular_progress_timer);        // circular progress bar for countdown
+        mCountProgress.setProgress(100);            // resetting progress bar
+
+
         mCountDownTimer = new CountDownTimer(setTime, 1000) {
 
             public void onTick(long millisUntilFinished) {
                 int timeLeft = (int) (1 + (millisUntilFinished / 1000));
                 mCountDownText.setText(Integer.toString(timeLeft));
+                mCountProgress.setProgress(timeLeft*10);            // updating progress bar
+
+
                 System.out.println("Waiting for " + timeLeft + " secs...");
                 countdownTime = millisUntilFinished;
             }
 
             public void onFinish() {
+                mCountProgress.setProgress(0);            // updating progress bar
+
                 mCountDownText.setText(Integer.toString(0));
                 displayResult();            // follow steps to display result
 
