@@ -4,6 +4,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.View;
@@ -22,7 +24,7 @@ import java.util.Random;
 
 public class IdentifyBreedActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
-    public String allDogBreeds[] = {"Chihuahua", "Afghan Hound", "Basset", "Blood Hound", "Australian Terrier",
+    public String[] allDogBreeds = {"Chihuahua", "Afghan Hound", "Basset", "Blood Hound", "Australian Terrier",
             "Golden Retriever", "Labrador Retriever", "Old English Sheepdog", "Rottweiler", "Greater Swiss Mountain Dog", "Dingo"};
 
 
@@ -56,7 +58,6 @@ public class IdentifyBreedActivity extends AppCompatActivity implements AdapterV
     private CountDownTimer mCountDownTimer;
     private TextView mCountDownText;
     private ProgressBar mCountProgress;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -322,12 +323,23 @@ public class IdentifyBreedActivity extends AppCompatActivity implements AdapterV
         mCountProgress = findViewById(R.id.circular_progress_timer);        // circular progress bar for countdown
         mCountProgress.setProgress(100);            // resetting progress bar
 
+        final GradientDrawable mProgressCircle = (GradientDrawable)mCountProgress.getProgressDrawable();            // getting the drawable shape of the progress bar
+
+
         mCountDownTimer = new CountDownTimer(setTime, 1000) {
 
             public void onTick(long millisUntilFinished) {
                 int timeLeft = (int) (1 + (millisUntilFinished / 1000));
                 mCountDownText.setText(Integer.toString(timeLeft));
                 mCountProgress.setProgress(timeLeft*10);            // updating progress bar
+
+                if (timeLeft<=3){
+                    mProgressCircle.setColor(Color.RED);
+                } else if (timeLeft<=5){
+                    mProgressCircle.setColor(Color.YELLOW);     // change this to Orange --->>>>>
+                } else{
+                    mProgressCircle.setColor(Color.BLUE);       // change this blur (Can go with dark color of theme)--->>>>
+                }
 
 
                 System.out.println("Waiting for " + timeLeft + " secs...");

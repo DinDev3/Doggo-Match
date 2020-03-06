@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.View;
@@ -338,6 +339,8 @@ public class IdentifyDogActivity extends AppCompatActivity {
         mCountProgress = findViewById(R.id.circular_progress_timer);        // circular progress bar for countdown
         mCountProgress.setProgress(100);            // resetting progress bar
 
+        final GradientDrawable mProgressCircle = (GradientDrawable)mCountProgress.getProgressDrawable();            // getting the drawable shape of the progress bar
+
 
         mCountDownTimer = new CountDownTimer(setTime, 1000) {
 
@@ -345,6 +348,14 @@ public class IdentifyDogActivity extends AppCompatActivity {
                 int timeLeft = (int) (1 + (millisUntilFinished / 1000));
                 mCountDownText.setText(Integer.toString(timeLeft));
                 mCountProgress.setProgress(timeLeft*10);            // updating progress bar
+
+                if (timeLeft<=3){
+                    mProgressCircle.setColor(Color.RED);
+                } else if (timeLeft<=5){
+                    mProgressCircle.setColor(Color.YELLOW);     // change this to Orange --->>>>>
+                } else{
+                    mProgressCircle.setColor(Color.BLUE);       // change this blur (Can go with dark color of theme)--->>>>
+                }
 
 
                 System.out.println("Waiting for " + timeLeft + " secs...");
