@@ -45,6 +45,8 @@ public class SearchBreedActivity extends AppCompatActivity {
     private long countdownTime;          // used to pass the remaining countdown time into the saved state when the device is rotated
     private String chosenBreed;
     private int randomImageIndex;           // the position of the image in the relevant array
+    int count = 0;          // used to count the number of images displayed, to prevent trying to display if all images are displayed
+
 
     private EditText mBreedText;
     private ImageView mImgDisplay;
@@ -116,6 +118,7 @@ public class SearchBreedActivity extends AppCompatActivity {
 
         stopHandler = false;            // getting rid of the stop handler, to access the loop
         shownImages.clear();                // if images can be repeated after restarting, after pressing the Stop button
+        count = 0;          // resetting count of images displayed of a specific breed
 
         closeKeyboard();            // to close the keyboard
 
@@ -159,6 +162,7 @@ public class SearchBreedActivity extends AppCompatActivity {
         } while (shownImages.contains(randomImageOfChosenBreed));
 
         shownImages.add(randomImageOfChosenBreed);          // to show unique images of a chosen breed
+        count++;
 
         int resource_id = getResources().getIdentifier(randomImageOfChosenBreed, "drawable", "lk.dinuka.doggomatch");
         mImgDisplay.setImageResource(resource_id);
@@ -216,6 +220,7 @@ public class SearchBreedActivity extends AppCompatActivity {
 
     public void runTimer(long setTime) {
 
+
         mCountDownTimer = new CountDownTimer(setTime, 1000) {
 
             public void onTick(long millisUntilFinished) {
@@ -228,7 +233,9 @@ public class SearchBreedActivity extends AppCompatActivity {
                 if (!stopHandler) {         // if the Stop button hasn't been pressed
                     showSlideShow(chosenBreed);         // display new image after every  5 secs
 
-                    start();            // this will get the CountDownTimer to repeat
+                    if (count < 10) {     // if all images aren't displayed
+                        start();            // this will get the CountDownTimer to repeat
+                    }
                 }
             }
 
