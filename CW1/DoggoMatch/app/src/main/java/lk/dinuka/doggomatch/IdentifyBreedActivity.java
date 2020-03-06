@@ -60,10 +60,10 @@ public class IdentifyBreedActivity extends AppCompatActivity implements AdapterV
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        try {
-            this.getSupportActionBar().hide();              // remove title bar of app
-        } catch (NullPointerException e) {
-        }
+//        try {
+//            this.getSupportActionBar().hide();              // remove title bar of app
+//        } catch (NullPointerException e) {
+//        }
 
         setContentView(R.layout.activity_identify_breed);
         mShowResultMessage = /*(TextView)*/ findViewById(R.id.result_text);         // Connecting TextView to variable

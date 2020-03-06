@@ -14,6 +14,12 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        try {
+            this.getSupportActionBar().hide();              // remove title bar of app
+        } catch (NullPointerException e) {
+        }
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 

@@ -56,10 +56,10 @@ public class IdentifyDogActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        try {
-            this.getSupportActionBar().hide();              // remove title bar of app
-        } catch (NullPointerException e) {
-        }
+//        try {
+//            this.getSupportActionBar().hide();              // remove title bar of app
+//        } catch (NullPointerException e) {
+//        }
 
         setContentView(R.layout.activity_identify_dog);
         mBreedNameLabel = /*(TextView)*/ findViewById(R.id.breed_name_label);         // Connecting TextView to variable

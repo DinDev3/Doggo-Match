@@ -1,9 +1,9 @@
 <resources>
     <string name="app_name">Doggo Match</string>
-    <string name="label_identify_breed">Identify the Breed</string>
-    <string name="label_identify_dog">Identify the Dog</string>
-    <string name="label_search_breeds">Search Dog Breeds</string>
-    <string name="switch_toggle">Switch</string>
+    <string name="label_identify_breed">IDENTIFY THE BREED</string>
+    <string name="label_identify_dog">IDENTIFY THE DOG</string>
+    <string name="label_search_breeds">SEARCH DOG BREEDS</string>
+    <string name="switch_toggle">SWITCH</string>
     <string name="label_toggle_countdown">Toggle Countdown</string>
     <string name="button_label_submit">Submit</string>
     <string name="random_dog_image_description">Displays an image of a random dog</string>

@@ -8,10 +8,10 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
-        <activity android:name=".SearchBreedActivity"></activity>
-        <activity android:name=".IdentifyDogActivity" />
-        <activity android:name=".IdentifyBreedActivity" />
+        android:theme="@style/Theme.MaterialComponents.Light">
+        <activity android:name=".SearchBreedActivity" android:label="Search Breed"></activity>
+        <activity android:name=".IdentifyDogActivity" android:label="Identify Dog"/>
+        <activity android:name=".IdentifyBreedActivity" android:label="Identify Breed"/>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

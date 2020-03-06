@@ -11,6 +11,8 @@
         android:id="@+id/button_identify_breed"
         android:layout_width="270dp"
         android:layout_height="60dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginRight="32dp"
         android:layout_marginBottom="16dp"
         android:background="@color/colorPrimary"
         android:freezesText="false"
@@ -21,13 +23,31 @@
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/button_identify_dog"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <Button
+        android:id="@+id/button_search_breed"
+        android:layout_width="270dp"
+        android:layout_height="60dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginRight="32dp"
+        android:layout_marginBottom="80dp"
+        android:background="@color/colorPrimary"
+        android:text="@string/label_search_breeds"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display4"
+        android:textColor="@color/primaryTextColor"
+        android:textColorLink="@color/primaryTextColor"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <Button
         android:id="@+id/button_identify_dog"
         android:layout_width="270dp"
         android:layout_height="60dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginRight="32dp"
         android:layout_marginBottom="16dp"
         android:background="@color/colorPrimary"
         android:text="@string/label_identify_dog"
@@ -37,24 +57,7 @@
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/button_search_breed"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
-        android:id="@+id/button_search_breed"
-        android:layout_width="270dp"
-        android:layout_height="60dp"
-        android:layout_marginBottom="70dp"
-        android:background="@color/colorPrimary"
-        android:text="@string/label_search_breeds"
-        android:textAppearance="@style/TextAppearance.AppCompat.Display4"
-        android:textStyle="bold"
-        android:textColor="@color/primaryTextColor"
-        android:textColorLink="@color/primaryTextColor"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <Switch
         android:id="@+id/switch_countdown"
