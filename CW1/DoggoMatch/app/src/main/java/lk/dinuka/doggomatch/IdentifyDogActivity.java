@@ -88,7 +88,7 @@ public class IdentifyDogActivity extends AppCompatActivity {
                 mCountDownText.setVisibility(View.VISIBLE);             // show countdown timer
 
 
-                timeLeft = (int) (1 + (countdownTime / 1000));
+                timeLeft = (int) (countdownTime / 1000);
                 mCountDownText.setText(Integer.toString(timeLeft));
 
                 // Re applying circular progress countdown colours
@@ -108,7 +108,7 @@ public class IdentifyDogActivity extends AppCompatActivity {
 
 
                 if (resultText.toString().equals("CORRECT!")) {
-                    mShowResultMessage.setTextColor(Color.parseColor("#00E676"));
+                    mShowResultMessage.setTextColor(Color.parseColor("#42bf2d"));
                     mCountDownText.setText(Integer.toString(timeLeft));     // show time that was left
                 } else if (resultText.toString().equals("WRONG!")) {
                     mShowResultMessage.setTextColor(Color.RED);
@@ -169,7 +169,6 @@ public class IdentifyDogActivity extends AppCompatActivity {
         super.onSaveInstanceState(outState);
 
         outState.putLong("time_left", countdownTime);          // time left in countdown timer
-        // this will pass in null if image is clicked!!!!!!!!!!----------->>>>>>>>>>>>
 
         outState.putString("question_breed", questionBreed);
         outState.putStringArrayList("displaying_three", (ArrayList<String>) displayingBreeds);
@@ -311,17 +310,26 @@ public class IdentifyDogActivity extends AppCompatActivity {
 
     public void checkAnswerFirst(View view) {            // when the first image is clicked, checks if the answer is correct
         mPickedImage = findViewById(R.id.first_dog_image);
-        displayResult();
+
+        if (!mShowResultMessage.getText().equals("Time's up!")){            // making sure that the user can't choose an image after the timer is over
+            displayResult();
+        }
     }
 
     public void checkAnswerSecond(View view) {            // when the second image is clicked, checks if the answer is correct
         mPickedImage = findViewById(R.id.second_dog_image);
-        displayResult();
+
+        if (!mShowResultMessage.getText().equals("Time's up!")){            // making sure that the user can't choose an image after the timer is over
+            displayResult();
+        }
     }
 
     public void checkAnswerThird(View view) {            // when the third image is clicked, checks if the answer is correct
         mPickedImage = findViewById(R.id.third_dog_image);
-        displayResult();
+
+        if (!mShowResultMessage.getText().equals("Time's up!")){            // making sure that the user can't choose an image after the timer is over
+            displayResult();
+        }
     }
 
 
@@ -330,8 +338,7 @@ public class IdentifyDogActivity extends AppCompatActivity {
         try {
             System.out.println(mPickedImage.getTag());          // To check whether the chosen image gave the correct tag
 
-            // choosing an image after the countdown is over - is possible once
-            if (!isFlagFirstPick) {
+            if (!isFlagFirstPick) {         // allowing the user to take only one attempt
                 isFlagFirstPick = true;
                 if (mPickedImage.getTag().equals(questionBreed)) {        // If the displayed breed was picked properly
                     mShowResultMessage.setText("CORRECT!");

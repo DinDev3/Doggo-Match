@@ -68,6 +68,7 @@
         android:layout_marginBottom="28dp"
         android:checked="false"
         android:text="@string/label_toggle_countdown"
+        android:textColor="@color/colorPrimaryDark"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 

@@ -247,7 +247,8 @@ public class SearchBreedActivity extends AppCompatActivity {
                     showSlideShow(chosenBreed);         // display new image after every  5 secs
 
                     if (count < 10) {     // if all images aren't displayed
-                        start();            // this will get the CountDownTimer to repeat
+//                        start();            // this will get the CountDownTimer to repeat
+                        runTimer(5000);             // making sure that the timer ticks for 5s after rotating the screen
                     }
                 }
             }
