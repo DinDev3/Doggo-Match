@@ -44,7 +44,7 @@ public class IdentifyDogActivity extends AppCompatActivity {
     private boolean isFlagFirstPick;         // used to check if one image was selected  -  to make sure that the user can't take multiple chances
     //    private boolean isFlagPicked;            // to check whether an image was chosen at all -  needed for countdown
     private long countdownTime;          // used to pass the remaining countdown time into the saved state when the device is rotated
-
+    private int timeLeft;
 
     private TextView mBreedNameLabel;
     private ImageView mPickedImage;
@@ -82,20 +82,45 @@ public class IdentifyDogActivity extends AppCompatActivity {
 
             CharSequence resultText = savedInstanceState.getCharSequence("result_text");
 
-            if (resultText.toString().equals("CORRECT!")) {
-                mShowResultMessage.setTextColor(Color.parseColor("#00E676"));
-//                System.out.println(countdownTime);
-//                mCountDownText.setText(String.valueOf((int)countdownTime));           // show time that was left
-            } else if (resultText.toString().equals("WRONG!")) {
-                mShowResultMessage.setTextColor(Color.RED);
-//                mCountDownText.setText(String.valueOf((int)countdownTime));           // show time that was left
-            } else if (resultText.toString().equals("Time's up!")) {
-                mShowResultMessage.setTextColor(Color.BLUE);
-//                mCountDownText.setText(String.valueOf((int)countdownTime));           // show time that was left
-            } else {
-                if (mCountdownToggle) {
+
+            if (mCountdownToggle) {
+                mCountDownText = findViewById(R.id.timer_text);
+                mCountDownText.setVisibility(View.VISIBLE);             // show countdown timer
+
+
+                timeLeft = (int) (1 + (countdownTime / 1000));
+                mCountDownText.setText(Integer.toString(timeLeft));
+
+                // Re applying circular progress countdown colours
+                mCountProgress = findViewById(R.id.circular_progress_timer);        // circular progress bar for countdown
+                mCountProgress.setProgress(100);            // resetting progress bar
+
+                final GradientDrawable mProgressCircle = (GradientDrawable) mCountProgress.getProgressDrawable();            // getting the drawable shape of the progress bar
+
+                if (timeLeft <= 2) {
+                    mProgressCircle.setColor(Color.RED);
+                } else if (timeLeft <= 5) {
+                    mProgressCircle.setColor(Color.parseColor("#ffa000"));
+                } else {
+                    mProgressCircle.setColor(Color.parseColor("#880E4F"));
+                }
+
+
+
+                if (resultText.toString().equals("CORRECT!")) {
+                    mShowResultMessage.setTextColor(Color.parseColor("#00E676"));
+                    mCountDownText.setText(Integer.toString(timeLeft));     // show time that was left
+                } else if (resultText.toString().equals("WRONG!")) {
+                    mShowResultMessage.setTextColor(Color.RED);
+                    mCountDownText.setText(Integer.toString(timeLeft));     // show time that was left
+                } else if (resultText.toString().equals("Time's up!")) {
+                    mShowResultMessage.setTextColor(Color.BLUE);
+                    mCountDownText.setText(Integer.toString(timeLeft));     // show time that was left
+                } else {
+                    if (mCountdownToggle) {
 //                // run the timer only if a result isn't displayed already
-                    runTimer(countdownTime);
+                        runTimer(countdownTime);
+                    }
                 }
             }
 
@@ -339,21 +364,21 @@ public class IdentifyDogActivity extends AppCompatActivity {
         mCountProgress = findViewById(R.id.circular_progress_timer);        // circular progress bar for countdown
         mCountProgress.setProgress(100);            // resetting progress bar
 
-        final GradientDrawable mProgressCircle = (GradientDrawable)mCountProgress.getProgressDrawable();            // getting the drawable shape of the progress bar
+        final GradientDrawable mProgressCircle = (GradientDrawable) mCountProgress.getProgressDrawable();            // getting the drawable shape of the progress bar
 
 
         mCountDownTimer = new CountDownTimer(setTime, 1000) {
 
             public void onTick(long millisUntilFinished) {
-                int timeLeft = (int) (1 + (millisUntilFinished / 1000));
+                timeLeft = (int) (1 + (millisUntilFinished / 1000));
                 mCountDownText.setText(Integer.toString(timeLeft));
-                mCountProgress.setProgress(timeLeft*10);            // updating progress bar
+                mCountProgress.setProgress(timeLeft * 10);            // updating progress bar
 
-                if (timeLeft<=2){
+                if (timeLeft <= 2) {
                     mProgressCircle.setColor(Color.RED);
-                } else if (timeLeft<=5){
+                } else if (timeLeft <= 5) {
                     mProgressCircle.setColor(Color.parseColor("#ffa000"));
-                } else{
+                } else {
                     mProgressCircle.setColor(Color.parseColor("#880E4F"));
                 }
 
