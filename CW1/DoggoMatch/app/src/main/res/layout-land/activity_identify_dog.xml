@@ -17,6 +17,16 @@
         app:srcCompat="@drawable/big_paw_light_landscape_gradient" />
 
     <TextView
+        android:id="@+id/identify_dog_instructions2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/choose_the_dog_instruction"
+        android:textColor="#5E000000"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/result_text" />
+
+    <TextView
         android:id="@+id/breed_name_label"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
@@ -34,13 +44,12 @@
         android:id="@+id/linearLayout"
         android:layout_width="640dp"
         android:layout_height="160dp"
-        android:layout_marginTop="16dp"
         android:orientation="horizontal"
         app:layout_constraintBottom_toTopOf="@+id/next_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/result_text">
+        app:layout_constraintTop_toBottomOf="@+id/identify_dog_instructions2">
 
         <ImageView
             android:id="@+id/first_dog_image"
@@ -70,7 +79,7 @@
         android:id="@+id/next_button"
         android:layout_width="170dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="12dp"
         android:onClick="showNextImageSet"
         android:text="@string/next_button_label"
         android:textAllCaps="false"

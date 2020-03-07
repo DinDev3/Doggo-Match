@@ -16,6 +16,18 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/big_paw_light_landscape_gradient" />
 
+    <TextView
+        android:id="@+id/identify_breed_instructions2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/choose_breed_instruction"
+        android:textColor="#5E000000"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.873"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/correct_breed_answer" />
+
     <ImageView
         android:id="@+id/random_dog_image"
         android:layout_width="270dp"
@@ -32,11 +44,10 @@
         android:id="@+id/breed_spinner"
         android:layout_width="210dp"
         android:layout_height="49dp"
-        android:layout_marginTop="22dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.886"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/correct_breed_answer" />
+        app:layout_constraintTop_toBottomOf="@+id/identify_breed_instructions2" />
 
     <Button
         android:id="@+id/submit_button_search"

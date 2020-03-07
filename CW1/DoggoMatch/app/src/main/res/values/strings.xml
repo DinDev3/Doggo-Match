@@ -20,6 +20,8 @@
     <string name="back_drop_of_paw">Back Drop of Paw</string>
     <string name="app_logo_description">App Logo</string>
     <string name="landscape_back_drop_image">Landscape Back-drop image</string>
+    <string name="choose_breed_instruction">Choose Breed from Dropdown</string>
+    <string name="choose_the_dog_instruction">Choose the Dog image that matches the Breed</string>
 
 
     <string-array name="breeds_array">

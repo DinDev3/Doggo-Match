@@ -31,11 +31,10 @@
         android:id="@+id/breed_spinner"
         android:layout_width="210dp"
         android:layout_height="49dp"
-        android:layout_marginTop="22dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.527"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/correct_breed_answer" />
+        app:layout_constraintTop_toBottomOf="@+id/identify_breed_instructions" />
 
     <Button
         android:id="@+id/submit_button_search"
@@ -57,7 +56,7 @@
         android:id="@+id/result_text"
         android:layout_width="200dp"
         android:layout_height="35dp"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="20dp"
         android:gravity="center|center_horizontal"
         android:textSize="24sp"
         android:textStyle="bold|italic"
@@ -108,5 +107,16 @@
         android:rotation="-90"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/identify_breed_instructions"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/choose_breed_instruction"
+        android:textColor="#5E000000"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/correct_breed_answer" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

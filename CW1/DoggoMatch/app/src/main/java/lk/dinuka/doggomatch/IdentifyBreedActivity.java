@@ -4,7 +4,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -114,6 +113,23 @@ public class IdentifyBreedActivity extends AppCompatActivity implements AdapterV
             CharSequence resultText = savedInstanceState.getCharSequence("result_text");
             mShowResultMessage.setText(resultText);
 
+            String buttonText = savedInstanceState.getString("button_text");
+            System.out.println(buttonText);
+
+            if (buttonText.equals("Next")) {
+                mButtonSubNext.setText("Next");
+
+                if (mShowResultMessage.toString().equals("CORRECT!")) {
+                    mShowResultMessage.setTextColor(Color.parseColor("#42bf2d"));
+                } else {
+                    mShowResultMessage.setTextColor(Color.RED);
+                    mShowCorrectAns.setTextColor(Color.BLUE);
+                }
+            } else{
+                mButtonSubNext.setText("Submit");
+
+            }
+
 
             // getting the String value that comes with the key "displayed_breed"
             displayRelevantImage(randomBreed, randomImageIndex);
@@ -137,8 +153,8 @@ public class IdentifyBreedActivity extends AppCompatActivity implements AdapterV
             //----------Display initial random image
             displayRandomImage();
 
-            //------------Game, if Countdown is toggled on
-            // check if the countdown timer is on and run the countdown timer here, else follow the normal method
+//------------Game, if Countdown is toggled on
+// check if the countdown timer is on and run the countdown timer here, else follow the normal method
             final long SET_TIME = 10000;
 
             if (mCountdownToggle) {
@@ -171,9 +187,11 @@ public class IdentifyBreedActivity extends AppCompatActivity implements AdapterV
         outState.putString("displayed_breed", randomBreed);         // saving displayed breed
         outState.putInt("displayed_index", randomImageIndex);       // saving displayed index of chosen image
         outState.putStringArrayList("displayed_images", (ArrayList<String>) allDisplayedImages);            // saving arrayList of displayed images
-        outState.putString("spinner_chosen",selectedSpinnerLabel);          // spinner that has been chosen
+        outState.putString("spinner_chosen", selectedSpinnerLabel);          // spinner that has been chosen
         outState.putCharSequence("result_text", mShowResultMessage.getText());
         outState.putCharSequence("correct_ans_text", mShowCorrectAns.getText());
+
+        outState.putString("button_text", mButtonSubNext.getText().toString());     // to make sure that button text isn't reset to "Submit" all the time
 
         outState.putLong("time_left", countdownTime);          // time left in countdown timer
     }
@@ -315,7 +333,7 @@ public class IdentifyBreedActivity extends AppCompatActivity implements AdapterV
     }
 
 
-    public void runTimer(long setTime){
+    public void runTimer(long setTime) {
 
         mCountDownText = findViewById(R.id.timer_text);
         mCountDownText.setVisibility(View.VISIBLE);             // show countdown timer
@@ -323,7 +341,7 @@ public class IdentifyBreedActivity extends AppCompatActivity implements AdapterV
         mCountProgress = findViewById(R.id.circular_progress_timer);        // circular progress bar for countdown
         mCountProgress.setProgress(100);            // resetting progress bar
 
-        final GradientDrawable mProgressCircle = (GradientDrawable)mCountProgress.getProgressDrawable();            // getting the drawable shape of the progress bar
+        final GradientDrawable mProgressCircle = (GradientDrawable) mCountProgress.getProgressDrawable();            // getting the drawable shape of the progress bar
 
 
         mCountDownTimer = new CountDownTimer(setTime, 1000) {
@@ -331,13 +349,13 @@ public class IdentifyBreedActivity extends AppCompatActivity implements AdapterV
             public void onTick(long millisUntilFinished) {
                 int timeLeft = (int) (1 + (millisUntilFinished / 1000));
                 mCountDownText.setText(Integer.toString(timeLeft));
-                mCountProgress.setProgress(timeLeft*10);            // updating progress bar
+                mCountProgress.setProgress(timeLeft * 10);            // updating progress bar
 
-                if (timeLeft<=2){
+                if (timeLeft <= 2) {
                     mProgressCircle.setColor(Color.RED);
-                } else if (timeLeft<=5){
+                } else if (timeLeft <= 5) {
                     mProgressCircle.setColor(Color.parseColor("#ffa000"));
-                } else{
+                } else {
                     mProgressCircle.setColor(Color.parseColor("#880E4F"));
                 }
 
