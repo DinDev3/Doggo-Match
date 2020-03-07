@@ -46,7 +46,7 @@ public class SearchBreedActivity extends AppCompatActivity {
     private long countdownTime;          // used to pass the remaining countdown time into the saved state when the device is rotated
     private String chosenBreed;
     private int randomImageIndex;           // the position of the image in the relevant array
-    int count = 0;          // used to count the number of images displayed, to prevent trying to display if all images are displayed
+    int count;          // used to count the number of images displayed, to prevent trying to display if all images are displayed
 
 
     private EditText mBreedText;
@@ -75,6 +75,7 @@ public class SearchBreedActivity extends AppCompatActivity {
             countdownTime = savedInstanceState.getLong("time_left");
             chosenBreed = savedInstanceState.getString("breed_name");
             randomImageIndex = savedInstanceState.getInt("displayed_index");
+            count = savedInstanceState.getInt("count_images");
 
             shownImages = savedInstanceState.getStringArrayList("shown_images");
 
@@ -111,6 +112,9 @@ public class SearchBreedActivity extends AppCompatActivity {
         outState.putString("breed_name", chosenBreed);       // breed that was searched for
         outState.putStringArrayList("shown_images", (ArrayList<String>) shownImages);           // all images that were shown
         outState.putInt("displayed_index", randomImageIndex);
+
+        outState.putInt("count_images",count);      // preserves the count of the number of images displayed,
+                                                    // to prevent trying to display if all images are displayed
 
         outState.putLong("time_left", countdownTime);          // time left in countdown timer
 
