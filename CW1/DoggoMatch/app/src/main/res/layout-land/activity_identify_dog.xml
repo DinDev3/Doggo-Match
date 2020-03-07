@@ -14,7 +14,7 @@
         android:contentDescription="@string/landscape_back_drop_image"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/big_paw_light_landscape" />
+        app:srcCompat="@drawable/big_paw_light_landscape_gradient" />
 
     <TextView
         android:id="@+id/breed_name_label"
@@ -89,7 +89,7 @@
         android:layout_marginTop="8dp"
         android:gravity="center|center_horizontal"
         android:textSize="24sp"
-        android:textStyle="italic"
+        android:textStyle="bold|italic"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"

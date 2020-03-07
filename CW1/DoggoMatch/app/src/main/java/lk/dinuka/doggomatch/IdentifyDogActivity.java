@@ -310,7 +310,7 @@ public class IdentifyDogActivity extends AppCompatActivity {
                 isFlagFirstPick = true;
                 if (mPickedImage.getTag().equals(questionBreed)) {        // If the displayed breed was picked properly
                     mShowResultMessage.setText("CORRECT!");
-                    mShowResultMessage.setTextColor(Color.parseColor("#00E676"));
+                    mShowResultMessage.setTextColor(Color.parseColor("#42bf2d"));
 
                 } else {
                     mShowResultMessage.setText("WRONG!");
@@ -349,12 +349,12 @@ public class IdentifyDogActivity extends AppCompatActivity {
                 mCountDownText.setText(Integer.toString(timeLeft));
                 mCountProgress.setProgress(timeLeft*10);            // updating progress bar
 
-                if (timeLeft<=3){
+                if (timeLeft<=2){
                     mProgressCircle.setColor(Color.RED);
                 } else if (timeLeft<=5){
-                    mProgressCircle.setColor(Color.YELLOW);     // change this to Orange --->>>>>
+                    mProgressCircle.setColor(Color.parseColor("#ffa000"));
                 } else{
-                    mProgressCircle.setColor(Color.BLUE);       // change this blur (Can go with dark color of theme)--->>>>
+                    mProgressCircle.setColor(Color.parseColor("#880E4F"));
                 }
 
 

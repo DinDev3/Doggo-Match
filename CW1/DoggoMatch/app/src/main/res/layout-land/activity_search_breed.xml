@@ -13,7 +13,7 @@
         android:contentDescription="@string/landscape_back_drop_image"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/big_paw_light_landscape" />
+        app:srcCompat="@drawable/big_paw_light_landscape_gradient" />
 
     <EditText
         android:id="@+id/enter_breed_text"

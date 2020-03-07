@@ -284,7 +284,7 @@ public class IdentifyBreedActivity extends AppCompatActivity implements AdapterV
         if (mButtonSubNext.getText().equals("Submit")) {        // Submit has been clicked
             if (selectedSpinnerLabel.equals(randomBreed)) {
                 mShowResultMessage.setText("CORRECT!");
-                mShowResultMessage.setTextColor(Color.parseColor("#00E676"));           // change this green-->>>>>>>>>>>>>
+                mShowResultMessage.setTextColor(Color.parseColor("#42bf2d"));
             } else {
                 mShowResultMessage.setText("WRONG!");
                 mShowResultMessage.setTextColor(Color.RED);
@@ -333,12 +333,12 @@ public class IdentifyBreedActivity extends AppCompatActivity implements AdapterV
                 mCountDownText.setText(Integer.toString(timeLeft));
                 mCountProgress.setProgress(timeLeft*10);            // updating progress bar
 
-                if (timeLeft<=3){
+                if (timeLeft<=2){
                     mProgressCircle.setColor(Color.RED);
                 } else if (timeLeft<=5){
-                    mProgressCircle.setColor(Color.YELLOW);     // change this to Orange --->>>>>
+                    mProgressCircle.setColor(Color.parseColor("#ffa000"));
                 } else{
-                    mProgressCircle.setColor(Color.BLUE);       // change this to green? (Can go with dark color of theme)--->>>>
+                    mProgressCircle.setColor(Color.parseColor("#880E4F"));
                 }
 
 

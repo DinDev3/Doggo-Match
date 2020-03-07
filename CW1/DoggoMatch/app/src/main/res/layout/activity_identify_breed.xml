@@ -8,13 +8,13 @@
 
     <ImageView
         android:id="@+id/back_drop_image"
-        android:layout_width="413dp"
-        android:layout_height="610dp"
+        android:layout_width="421dp"
+        android:layout_height="731dp"
         android:contentDescription="@string/back_drop_of_paw"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/big_paw_light" />
+        app:srcCompat="@drawable/big_paw_light_gradient" />
 
     <ImageView
         android:id="@+id/random_dog_image"
@@ -108,4 +108,5 @@
         android:rotation="-90"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
