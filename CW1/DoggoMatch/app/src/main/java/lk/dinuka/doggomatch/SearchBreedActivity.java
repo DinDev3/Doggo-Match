@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -113,6 +114,11 @@ public class SearchBreedActivity extends AppCompatActivity {
 
     }
 
+    public void displayToast(String message) {          // used to display a toast message, if the user doesn't give a proper name
+        Toast.makeText(getApplicationContext(), message,
+                Toast.LENGTH_SHORT).show();
+    }
+
     public void submitBreed(View view) {
         mBreedText = findViewById(R.id.enter_breed_text);
 
@@ -137,7 +143,8 @@ public class SearchBreedActivity extends AppCompatActivity {
             runTimer(5000);     // run timer for 5 seconds
 
         } else {
-            // Display Toast message to enter valid breed name/ images of entered breed name couldn't be found >>>>>>>>>>
+            // Display Toast message to enter valid breed name/ images of entered breed name couldn't be found
+            displayToast("Please check if you entered the name of the Breed correctly");
         }
     }
 
