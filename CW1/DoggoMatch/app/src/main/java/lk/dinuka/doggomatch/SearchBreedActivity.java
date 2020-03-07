@@ -78,14 +78,16 @@ public class SearchBreedActivity extends AppCompatActivity {
 
             shownImages = savedInstanceState.getStringArrayList("shown_images");
 
-            displayRelevantImage(chosenBreed, randomImageIndex);             // get the id of the image that was already shown before rotating the device
+            if (chosenBreed!= null) {       // checking whether breed was chosen before rotating
+                displayRelevantImage(chosenBreed, randomImageIndex);             // get the id of the image that was already shown before rotating the device
 
-            // display chosen random image
-            int resource_id = getResources().getIdentifier(randomImageOfChosenBreed, "drawable", "lk.dinuka.doggomatch");
-            mImgDisplay.setImageResource(resource_id);
+                // display chosen random image
+                int resource_id = getResources().getIdentifier(randomImageOfChosenBreed, "drawable", "lk.dinuka.doggomatch");
+                mImgDisplay.setImageResource(resource_id);
 
 
-            runTimer(countdownTime);            // run timer from the point it stopped when rotating the device
+                runTimer(countdownTime);            // run timer from the point it stopped when rotating the device
+            }
 
         } else {
             // if activity was created for the first time (opened)

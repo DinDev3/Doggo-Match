@@ -7,6 +7,15 @@
     android:background="@color/backgroundColor"
     tools:context=".IdentifyDogActivity">
 
+    <ImageView
+        android:id="@+id/back_drop_image_land"
+        android:layout_width="733dp"
+        android:layout_height="413dp"
+        android:contentDescription="@string/landscape_back_drop_image"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/big_paw_light_landscape" />
+
     <TextView
         android:id="@+id/breed_name_label"
         android:layout_width="300dp"
@@ -70,7 +79,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+        app:rippleColor="#88FFFFFF" />
 
     <TextView
         android:id="@+id/result_text"
@@ -95,4 +105,5 @@
         android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/breed_name_label" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

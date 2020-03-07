@@ -4,7 +4,7 @@
     <string name="label_identify_dog">IDENTIFY THE DOG</string>
     <string name="label_search_breeds">SEARCH DOG BREEDS</string>
     <string name="switch_toggle">SWITCH</string>
-    <string name="label_toggle_countdown">Toggle Countdown</string>
+    <string name="label_toggle_countdown">Countdown</string>
     <string name="button_label_submit">Submit</string>
     <string name="random_dog_image_description">Displays an image of a random dog</string>
     <string name="breed_text">Breed:</string>
@@ -19,6 +19,7 @@
     <string name="dog_splashing_image">dog_splashing_image</string>
     <string name="back_drop_of_paw">Back Drop of Paw</string>
     <string name="app_logo_description">App Logo</string>
+    <string name="landscape_back_drop_image">Landscape Back-drop image</string>
 
 
     <string-array name="breeds_array">

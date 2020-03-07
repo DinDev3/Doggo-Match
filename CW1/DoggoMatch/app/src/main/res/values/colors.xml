@@ -4,8 +4,11 @@
 <!--    <color name="colorPrimaryDark">#00574B</color>-->
 <!--    <color name="colorAccent">#D81B60</color>-->
     <color name="colorPrimary">#AD1457</color>
+    <color name="colorPrimaryDark">#880E4F</color>
+    <color name="colorAccent">#FF4081</color>
+
     <color name="colorOnPrimary">#e35183</color>
-    <color name="colorPrimaryVariant">#880E4F</color>
+    <color name="colorPrimaryVariant">#303F9F</color>
     <color name="primaryTextColor">#FFFFFF</color>
     <color name="backgroundColor">#f5f6fa</color>
 

@@ -23,7 +23,7 @@
         app:layout_constraintBottom_toTopOf="@+id/button_identify_dog"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:rippleColor="@color/material_on_primary_emphasis_high_type" />
+        app:rippleColor="#88FFFFFF" />
 
     <Button
         android:id="@+id/button_identify_dog"
@@ -39,7 +39,8 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/button_search_breed"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:rippleColor="#88FFFFFF"/>
 
     <Button
         android:id="@+id/button_search_breed"
@@ -55,15 +56,16 @@
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:rippleColor="#88FFFFFF"/>
 
     <Switch
         android:id="@+id/switch_countdown"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginBottom="24dp"
+        android:layout_marginEnd="28dp"
+        android:layout_marginRight="28dp"
+        android:layout_marginBottom="28dp"
         android:checked="false"
         android:text="@string/label_toggle_countdown"
         app:layout_constraintBottom_toBottomOf="parent"

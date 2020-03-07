@@ -7,69 +7,69 @@
     tools:context=".SearchBreedActivity">
 
     <ImageView
-        android:id="@+id/back_drop_image"
-        android:layout_width="413dp"
-        android:layout_height="610dp"
-        android:contentDescription="@string/back_drop_of_paw"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:id="@+id/back_drop_image_land"
+        android:layout_width="733dp"
+        android:layout_height="413dp"
+        android:contentDescription="@string/landscape_back_drop_image"
         app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/big_paw_light" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/big_paw_light_landscape" />
+
+    <EditText
+        android:id="@+id/enter_breed_text"
+        android:layout_width="260dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="110dp"
+        android:autofillHints=""
+        android:ems="10"
+        android:gravity="center_horizontal"
+        android:hint="@string/enter_a_breed_hint"
+        android:inputType="textPersonName|textCapWords"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.428"
+        app:layout_constraintStart_toEndOf="@+id/search_random_image"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/stop_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="22dp"
         android:background="#B40606"
         android:onClick="stopShow"
         android:text="@string/stop_label"
         android:textAllCaps="false"
         android:textColor="@color/primaryTextColor"
         android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/search_random_image"
-        app:rippleColor="#88FFFFFF" />
+        app:layout_constraintEnd_toStartOf="@+id/submit_button_search"
+        app:layout_constraintTop_toBottomOf="@+id/enter_breed_text"
+        app:rippleColor="#88FFFFFF"/>
 
     <Button
         android:id="@+id/submit_button_search"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="70dp"
         android:onClick="submitBreed"
         android:text="@string/button_label_submit"
         android:textAllCaps="false"
         android:textColor="@color/primaryTextColor"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:rippleColor="#88FFFFFF" />
-
-    <EditText
-        android:id="@+id/enter_breed_text"
-        android:layout_width="240dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:autofillHints=""
-        android:ems="10"
-        android:gravity="center_horizontal"
-        android:hint="@string/enter_a_breed_hint"
-        android:inputType="textPersonName|textCapWords"
-        app:layout_constraintBaseline_toBaselineOf="@+id/submit_button_search"
-        app:layout_constraintEnd_toStartOf="@+id/submit_button_search" />
+        app:layout_constraintTop_toBottomOf="@+id/enter_breed_text"
+        app:rippleColor="#88FFFFFF"/>
 
     <ImageView
         android:id="@+id/search_random_image"
         android:layout_width="300dp"
         android:layout_height="300dp"
-        android:layout_marginTop="60dp"
         android:contentDescription="@string/random_image_of_breed_description"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.153"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/submit_button_search" />
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
