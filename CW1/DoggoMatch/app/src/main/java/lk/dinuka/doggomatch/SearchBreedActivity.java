@@ -76,6 +76,7 @@ public class SearchBreedActivity extends AppCompatActivity {
             chosenBreed = savedInstanceState.getString("breed_name");
             randomImageIndex = savedInstanceState.getInt("displayed_index");
             count = savedInstanceState.getInt("count_images");
+            stopHandler = savedInstanceState.getBoolean("is_stopped");
 
             shownImages = savedInstanceState.getStringArrayList("shown_images");
 
@@ -87,7 +88,9 @@ public class SearchBreedActivity extends AppCompatActivity {
                 mImgDisplay.setImageResource(resource_id);
 
 
-                runTimer(countdownTime);            // run timer from the point it stopped when rotating the device
+                if (!stopHandler) {     // checking if stop was pressed before rotating
+                    runTimer(countdownTime);            // run timer from the point it stopped when rotating the device
+                }
             }
 
         } else {
@@ -117,6 +120,7 @@ public class SearchBreedActivity extends AppCompatActivity {
                                                     // to prevent trying to display if all images are displayed
 
         outState.putLong("time_left", countdownTime);          // time left in countdown timer
+        outState.putBoolean("is_stopped", stopHandler);         // to check if slide show was stopped before rotating
 
     }
 
