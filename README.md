@@ -66,3 +66,27 @@ The user can input a name of a dog breed into the text field displayed. When the
 - Removed the title bar of the app from the main screen and displayed the logo that I created instead.
 - The countdown timer was placed on the top left of all the screens to make it easy for the user to see it without much effort. • A pinkish colour theme was used to give a playful, fun feeling as this is a game.
 - The instructions to be followed are displayed in all the screens. 
+
+## Landscape Layouts of all the screens
+![landscapes](CW1/Doc/resources/landscapes.png)
+
+Landscape layouts were created for all the screens.
+<br/>In all the landscape layouts, all the user input areas were kept to the right and the image displays were kept to the left/ the centre as required. This makes it easier for the user to enter input and makes it comfortable for the user to view the images displayed as most people are used to reading from the left of the screen. 
+
+### Software used to design UI elements
+- Figma
+- Adobe Illustrator 
+ 
+### Referred links to upload the app to Google Play Store:
+
+[https://medium.com/mindorks/upload-your-first-android-app-on-play-store-step-by-step-ee0de9123ac0](https://medium.com/mindorks/upload-your-first-android-app-on-play-store-step-by-step-ee0de9123ac0)
+
+[How To Upload Android App on Google Play Store | Publish App on Play Store](https://www.youtube.com/watch?v=8v0r_6mYgF8)
+
+[How To Upload Android App on Google Play Store | Publish App on Play Store Part-2](https://www.youtube.com/watch?v=YWfKnswgd4k)
+
+Privacy policy generator
+[https://app-privacy-policy-generator.firebaseapp.com/#](https://app-privacy-policy-generator.firebaseapp.com/)
+
+Privacy policy hosted location
+[https://doggo-match.flycricket.io/privacy.html](https://doggo-match.flycricket.io/privacy.html)
