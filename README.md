@@ -79,8 +79,8 @@ Landscape layouts were created for all the screens.
  
 #### Referred links to upload the app to Google Play Store:
 [https://medium.com/mindorks/upload-your-first-android-app-on-play-store-step-by-step-ee0de9123ac0](https://medium.com/mindorks/upload-your-first-android-app-on-play-store-step-by-step-ee0de9123ac0)
-[How To Upload Android App on Google Play Store | Publish App on Play Store](https://www.youtube.com/watch?v=8v0r_6mYgF8)
-[How To Upload Android App on Google Play Store | Publish App on Play Store Part-2](https://www.youtube.com/watch?v=YWfKnswgd4k)
+</br>[How To Upload Android App on Google Play Store | Publish App on Play Store](https://www.youtube.com/watch?v=8v0r_6mYgF8)
+</br>[How To Upload Android App on Google Play Store | Publish App on Play Store Part-2](https://www.youtube.com/watch?v=YWfKnswgd4k)
 
 #### Privacy policy generator
 [https://app-privacy-policy-generator.firebaseapp.com/#](https://app-privacy-policy-generator.firebaseapp.com/)
