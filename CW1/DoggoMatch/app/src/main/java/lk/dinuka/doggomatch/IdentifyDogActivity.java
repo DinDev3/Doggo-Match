@@ -406,7 +406,20 @@ public class IdentifyDogActivity extends AppCompatActivity {
             }
 
         }.start();
-
     }
-
 }
+
+/*
+
+References:
+
+https://stackoverflow.com/questions/6449654/how-to-get-image-resource-name/14028623
+
+https://stackoverflow.com/questions/15213974/add-multiple-items-to-already-initialized-arraylist-in-java
+
+https://stackoverflow.com/questions/6751564/how-to-pass-a-boolean-between-intents
+
+Dynamically change colour of drawable
+https://www.codota.com/code/java/methods/android.graphics.drawable.GradientDrawable/setColor
+
+ */

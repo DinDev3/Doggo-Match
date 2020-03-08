@@ -65,3 +65,18 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 }
+
+/*
+
+References:
+
+https://stackoverflow.com/questions/36236181/how-to-remove-title-bar-from-the-android-activity/36236700
+https://www.youtube.com/watch?v=JDC2m_2NuVo
+
+Switch button
+https://www.tutlane.com/tutorial/android/android-switch-on-off-button-with-examples
+https://www.youtube.com/watch?v=v2zIOH5trLw
+https://www.youtube.com/watch?v=ZcWN-d3tTT4
+
+
+ */

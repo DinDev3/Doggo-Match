@@ -265,10 +265,17 @@ public class SearchBreedActivity extends AppCompatActivity {
 
 
 /*
+
 References:
 
 Hide soft-keyboard
 https://www.youtube.com/watch?v=CW5Xekqfx3I
 
+Countdown timer
+https://developer.android.com/reference/android/os/CountDownTimer
+https://stackoverflow.com/questions/21726055/android-loop-part-of-the-code-every-5-seconds
+https://www.youtube.com/watch?v=7dQJAkjNEjM
+https://codinginflow.com/tutorials/android/countdowntimer/part-4-time-input
+https://www.youtube.com/watch?v=MDuGwI6P-X8
 
  */

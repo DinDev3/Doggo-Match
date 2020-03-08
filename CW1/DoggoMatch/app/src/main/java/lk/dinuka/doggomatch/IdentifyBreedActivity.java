@@ -382,3 +382,20 @@ public class IdentifyBreedActivity extends AppCompatActivity implements AdapterV
     }
 
 }
+
+/*
+
+References:
+
+https://stackoverflow.com/questions/4602902/how-to-set-the-text-color-of-textview-in-code
+https://material.io/design/color/the-color-system.html#tools-for-picking-colors
+
+How to Restore Variables When Rotating the Device
+https://www.youtube.com/watch?v=TcTgbVudLyQ
+
+Circular Progress bar - countdown timer
+https://www.youtube.com/watch?v=hSfN_aYKkzo
+https://codinginflow.com/tutorials/android/circular-determinate-progressbar
+https://material.io/components/progress-indicators/#specs
+
+ */
