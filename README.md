@@ -46,3 +46,23 @@ The user can input a name of a dog breed into the text field displayed. When the
 - As soon as the countdown timer reaches 0, the result is displayed to the user.
 - For the 2 and the slideshow, every single image displayed is unique.
 - When the device is rotated from portrait to landscape and back to portrait, the application resumes from the exact same point (views &amp; data).
+
+## Extra functionalities that I developed in the game
+- A circular countdown time progress that appears when the countdown timer is running in the &quot;Identify the Breed&quot; &amp; &quot;Identify the Dog&quot; games. The circular progress bar was created using a ring drawable, since the circular progress available in Android isn&#39;t determinate. The flat progress bar was used and swapped with a ring drawable to get the determinate option available for the flat progress bar.
+- The circular countdown progress appears in the primary dark colour of the theme of the app at first, then turns Orange when the timer gets to 5 seconds and red when it gets to the last 2 seconds.
+- If the user choses an answer before the countdown timer ends, the timer stop and gets reset when the next images are requested to be shown by the user.
+- The countdown timer and progress bar are displayed only if the user chooses the countdown option in the main screen.
+![countdown_progress](CW1/Doc/resources/countdown_progress.png)
+
+- The keyboard is minimized when the “Submit” button is pressed in the Search for Dog game. This makes it easy for the user to comfortably watch the slide show of dog images without trying to close the keyboard.
+- If the user chooses a Breed that is non-existent in the app, the user is notified to check if the name of the breed entered was erroneous in a toast message.
+![toast_search](CW1/Doc/resources/toast_search.png)
+
+- Once all the images of a particular breed are displayed in the “Search Breed” slideshow, the slide show stops, preventing the program going into an infinite loop and crashing.
+
+## Considerations taken when designing the UI/ UX of the game
+- Used Material UI theme for mainly buttons to get clean, clear and visually appealing buttons. Added a ripple effect to all the buttons.
+- Material Design - Color Tool was used to pick most of the colours.
+- Removed the title bar of the app from the main screen and displayed the logo that I created instead.
+- The countdown timer was placed on the top left of all the screens to make it easy for the user to see it without much effort. • A pinkish colour theme was used to give a playful, fun feeling as this is a game.
+- The instructions to be followed are displayed in all the screens. 
