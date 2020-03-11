@@ -48,6 +48,7 @@ public class IdentifyBreedActivity extends AppCompatActivity implements AdapterV
     public int randomImageIndex;
     public String randomImageOfChosenBreed;
     private long countdownTime;          // used to pass the remaining countdown time into the saved state when the device is rotated
+    private int timeLeft;
 
     public String selectedSpinnerLabel;
     private TextView mShowResultMessage;
@@ -113,15 +114,62 @@ public class IdentifyBreedActivity extends AppCompatActivity implements AdapterV
             CharSequence resultText = savedInstanceState.getCharSequence("result_text");
             mShowResultMessage.setText(resultText);
 
+            System.out.println(mShowResultMessage.toString());
+
             String buttonText = savedInstanceState.getString("button_text");
             System.out.println(buttonText);
+
+
+
+            if (mCountdownToggle) {
+                mCountDownText = findViewById(R.id.timer_text);
+                mCountDownText.setVisibility(View.VISIBLE);             // show countdown timer
+
+                timeLeft = (int) (countdownTime / 1000);
+                mCountDownText.setText(Integer.toString(timeLeft));
+
+                // Re applying circular progress countdown colours
+                mCountProgress = findViewById(R.id.circular_progress_timer);        // circular progress bar for countdown
+                mCountProgress.setProgress(100);            // resetting progress bar
+
+                final GradientDrawable mProgressCircle = (GradientDrawable) mCountProgress.getProgressDrawable();            // getting the drawable shape of the progress bar
+
+                if (timeLeft <= 2) {
+                    mProgressCircle.setColor(Color.RED);
+                } else if (timeLeft <= 5) {
+                    mProgressCircle.setColor(Color.parseColor("#ffa000"));
+                } else {
+                    mProgressCircle.setColor(Color.parseColor("#880E4F"));
+                }
+
+
+
+                if (resultText.toString().equals("CORRECT!")) {
+                    mShowResultMessage.setTextColor(Color.parseColor("#42bf2d"));
+                    mCountDownText.setText(Integer.toString(timeLeft));     // show time that was left
+                } else if (resultText.toString().equals("WRONG!")) {
+                    mShowResultMessage.setTextColor(Color.RED);
+                    mCountDownText.setText(Integer.toString(timeLeft));     // show time that was left
+                } else if (resultText.toString().equals("Time's up!")) {
+                    mShowResultMessage.setTextColor(Color.BLUE);
+                    mCountDownText.setText(Integer.toString(timeLeft));     // show time that was left
+                } else {
+                    if (mCountdownToggle) {
+//                // run the timer only if a result isn't displayed already
+                        runTimer(countdownTime);
+                    }
+                }
+            }
+
+
+
 
             if (buttonText.equals("Next")) {
                 mButtonSubNext.setText("Next");
 
-                if (mShowResultMessage.toString().equals("CORRECT!")) {
+                if (resultText.toString().equals("CORRECT!")) {
                     mShowResultMessage.setTextColor(Color.parseColor("#42bf2d"));
-                } else {
+                } else if(resultText.toString().equals("WRONG!")){
                     mShowResultMessage.setTextColor(Color.RED);
                     mShowCorrectAns.setTextColor(Color.BLUE);
                 }
@@ -142,11 +190,6 @@ public class IdentifyBreedActivity extends AppCompatActivity implements AdapterV
 //            System.out.println(allDisplayedImages);         // to check whether arrayList is saved
 
 
-            // ----------- restore stop watch, if mCountdownToggle was on
-//            System.out.println(mCountdownToggle);
-            if (mCountdownToggle) {
-                runTimer(countdownTime);                // resume timer
-            }
 
 
         } else {            // if activity was created for the first time (opened)
@@ -347,7 +390,7 @@ public class IdentifyBreedActivity extends AppCompatActivity implements AdapterV
         mCountDownTimer = new CountDownTimer(setTime, 1000) {
 
             public void onTick(long millisUntilFinished) {
-                int timeLeft = (int) (1 + (millisUntilFinished / 1000));
+                timeLeft = (int) (1 + (millisUntilFinished / 1000));
                 mCountDownText.setText(Integer.toString(timeLeft));
                 mCountProgress.setProgress(timeLeft * 10);            // updating progress bar
 

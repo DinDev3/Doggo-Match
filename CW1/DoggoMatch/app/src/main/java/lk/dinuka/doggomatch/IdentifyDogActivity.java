@@ -88,6 +88,7 @@ public class IdentifyDogActivity extends AppCompatActivity {
                 mCountDownText.setVisibility(View.VISIBLE);             // show countdown timer
 
 
+
                 timeLeft = (int) (countdownTime / 1000);
                 mCountDownText.setText(Integer.toString(timeLeft));
 
