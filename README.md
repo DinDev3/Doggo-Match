@@ -13,7 +13,7 @@ Doggo Match is a game that tests a user&#39;s knowledge on various breeds of Dog
 
 ## Home Screen of Doggo Match game
 Displayed below is the Home screen of the **Doggo Match** game.
-![main_screen](CW1/Doc/resources/main_screen.png)
+![main_screen](docs/resources/main_screen.png)
 
 The first screen (main screen) welcomes the user into the game with a cheerful, playful image of a dog with the logo of the game. This screen presents the user with 3 options which allows the user to choose the game that the user desires to move forward with. It also has a toggle Countdown option which the user can turn on, if the user wants the first two games to be more challenging with a countdown.
 
@@ -23,7 +23,7 @@ The 3 options shown in the main screen opens the following screens:
 - **SEARCH DOG BREEDS:** Lets the user search for images of a specific breed and view in a slideshow.
 
 ## Featured Screens of Doggo Match game
-![featured_screens](CW1/Doc/resources/featured_screens.png)
+![featured_screens](docs/resources/featured_screens.png)
 
 ### Identify the Breed Game
 
@@ -52,11 +52,11 @@ The user can input a name of a dog breed into the text field displayed. When the
 - The circular countdown progress appears in the primary dark colour of the theme of the app at first, then turns Orange when the timer gets to 5 seconds and red when it gets to the last 2 seconds.
 - If the user choses an answer before the countdown timer ends, the timer stop and gets reset when the next images are requested to be shown by the user.
 - The countdown timer and progress bar are displayed only if the user chooses the countdown option in the main screen.
-![countdown_progress](CW1/Doc/resources/countdown_progress.png)
+![countdown_progress](docs/resources/countdown_progress.png)
 
 - The keyboard is minimized when the “Submit” button is pressed in the Search for Dog game. This makes it easy for the user to comfortably watch the slide show of dog images without trying to close the keyboard.
 - If the user chooses a Breed that is non-existent in the app, the user is notified to check if the name of the breed entered was erroneous in a toast message.
-![toast_search](CW1/Doc/resources/toast_search.png)
+![toast_search](docs/resources/toast_search.png)
 
 - Once all the images of a particular breed are displayed in the “Search Breed” slideshow, the slide show stops, preventing the program going into an infinite loop and crashing.
 
@@ -68,7 +68,7 @@ The user can input a name of a dog breed into the text field displayed. When the
 - The instructions to be followed are displayed in all the screens. 
 
 ## Landscape Layouts of all the screens
-![landscapes](CW1/Doc/resources/landscapes.png)
+![landscapes](docs/resources/landscapes.png)
 
 Landscape layouts were created for all the screens.
 <br/>In all the landscape layouts, all the user input areas were kept to the right and the image displays were kept to the left/ the centre as required. This makes it easier for the user to enter input and makes it comfortable for the user to view the images displayed as most people are used to reading from the left of the screen. 
