@@ -87,3 +87,5 @@ Landscape layouts were created for all the screens.
 
 #### Privacy policy hosted location
 [https://doggo-match.flycricket.io/privacy.html](https://doggo-match.flycricket.io/privacy.html)
+
+*This repository contains code that I implemented for my second year Mobile Development Coursework-1; which was based on Android Application Development.*
